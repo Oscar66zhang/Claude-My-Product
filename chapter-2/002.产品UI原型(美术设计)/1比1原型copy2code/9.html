@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#8bf3f3",
+                        "primary-fixed-dim": "#6ed7d7",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#710d0b",
+                        "on-surface-variant": "#3d4949",
+                        "tertiary": "#924b25",
+                        "secondary": "#a8372d",
+                        "on-tertiary-container": "#6b2c08",
+                        "text-primary": "#1A1C1E",
+                        "income-teal": "#4EBABA",
+                        "surface-container-high": "#e6e8e9",
+                        "expense-red": "#F26D5F",
+                        "on-tertiary-fixed-variant": "#75340f",
+                        "surface-dim": "#d8dadb",
+                        "background": "#f8fafb",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#6d7979",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#ffdbcc",
+                        "inverse-surface": "#2e3132",
+                        "on-secondary-fixed-variant": "#871f19",
+                        "secondary-fixed": "#ffdad5",
+                        "text-secondary": "#6A7178",
+                        "inverse-primary": "#6ed7d7",
+                        "on-primary-fixed": "#002020",
+                        "secondary-container": "#ff7768",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f8fafb",
+                        "surface-white": "#FFFFFF",
+                        "on-tertiary-fixed": "#351000",
+                        "surface-container": "#eceeef",
+                        "surface": "#f8fafb",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "primary-container": "#4ebaba",
+                        "inverse-on-surface": "#eff1f2",
+                        "on-primary-container": "#004747",
+                        "surface-tint": "#006a6a",
+                        "surface-variant": "#e1e3e4",
+                        "on-primary-fixed-variant": "#004f50",
+                        "secondary-fixed-dim": "#ffb4aa",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "on-background": "#191c1d",
+                        "on-secondary-fixed": "#410001",
+                        "primary": "#006a6a",
+                        "surface-container-low": "#f2f4f5",
+                        "outline-variant": "#bcc9c8",
+                        "surface-container-highest": "#e1e3e4",
+                        "tertiary-container": "#ee9468",
+                        "on-surface": "#191c1d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "margin-tablet": "24px",
+                        "stack-sm": "8px",
+                        "margin-mobile": "16px",
+                        "stack-lg": "24px",
+                        "stack-md": "16px",
+                        "gutter": "12px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["manrope"],
+                        "headline-md": ["manrope"],
+                        "body-md": ["manrope"],
+                        "label-caps": ["manrope"],
+                        "body-lg": ["manrope"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 12px rgba(0, 106, 106, 0.04);
+        }
+
+        .glass-overlay {
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface transition-colors duration-300">
+    <!-- Desktop Side Navigation -->
+    <aside
+        class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-lowest dark:bg-surface-dim shadow-sm p-stack-md border-r border-outline-variant z-40">
+        <div class="mb-10 px-2">
+            <h1 class="font-headline-lg text-headline-lg text-income-teal">轻账本</h1>
+            <p class="text-on-surface-variant font-body-md text-body-md">Minimalist Finance</p>
+        </div>
+        <nav class="flex-1 space-y-2">
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 active:scale-95"
+                href="#">
+                <span class="material-symbols-outlined" data-icon="home">home</span>
+                <span class="font-body-md text-body-md">首页</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 active:scale-95"
+                href="#">
+                <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                <span class="font-body-md text-body-md">账单</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 active:scale-95"
+                href="#">
+                <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+                <span class="font-body-md text-body-md">预算</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 active:scale-95"
+                href="#">
+                <span class="material-symbols-outlined" data-icon="person">person</span>
+                <span class="font-body-md text-body-md">我的</span>
+            </a>
+        </nav>
+        <div class="mt-auto pt-4 border-t border-outline-variant">
+            <a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold transition-all duration-200 active:scale-95"
+                href="#">
+                <span class="material-symbols-outlined" data-icon="settings">settings</span>
+                <span class="font-body-md text-body-md">设置</span>
+            </a>
+        </div>
+    </aside>
+    <!-- Main Content Area -->
+    <main class="md:ml-64 min-h-screen p-6 md:p-10 lg:p-16 max-w-5xl mx-auto">
+        <!-- Header Section -->
+        <header class="mb-10 flex items-center justify-between">
+            <h2 class="font-headline-lg text-headline-lg text-text-primary">设置</h2>
+            <div class="md:hidden">
+                <span class="material-symbols-outlined text-primary" data-icon="settings">settings</span>
+            </div>
+        </header>
+        <div class="space-y-8">
+            <!-- Profile Section -->
+            <section class="bg-surface-white rounded-xl p-6 card-shadow border border-outline-variant/30">
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="material-symbols-outlined text-primary text-3xl"
+                        data-icon="person_outline">person_outline</span>
+                    <h3 class="font-headline-md text-headline-md">个人资料</h3>
+                </div>
+                <div
+                    class="flex flex-col sm:flex-row items-center justify-between gap-6 p-4 bg-surface-container-low rounded-lg">
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-full overflow-hidden bg-primary-fixed border-2 border-primary/20">
+                            <img alt="User Avatar" class="w-full h-full object-cover"
+                                data-alt="A clean, professional headshot of a person for a user profile avatar. The background is a soft, out-of-focus interior with neutral tones. The lighting is warm and natural, creating a friendly and reliable corporate professional aesthetic that matches a minimalist teal-accented UI."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqn4mdCSBsEeABQNBebbdjAuanHOlGMMasOkYrKUWy3589wofCF52s_CAmN-ZztGxGyLCsmhnQmjM-RfTtKcMA5LfJlWjLtf6zBeF2hNOv45Po08Sj1BlMx5wciWm34nzuBAVXa5QcA94q52AIslFluTix1xPT5wqT4vAGE-XL8l5YjBANIxJ_SPtyq491COYkhoRy6brLfLELP4fYIsezLJNDsGFNgY7o48qT1uAsEFwiirOmZhwsp58SZxSuTvMjKk9XN7VgWRQ" />
+                        </div>
+                        <div>
+                            <p class="font-headline-md text-headline-md text-text-primary">Guest</p>
+                            <p class="font-body-md text-body-md text-text-secondary">serene.user@example.com</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button
+                            class="px-6 py-2 border border-outline-variant text-primary rounded-lg font-body-md text-body-md hover:bg-surface-container-high transition-colors">修改密码</button>
+                        <button
+                            class="px-6 py-2 bg-primary text-on-primary rounded-lg font-body-md text-body-md hover:opacity-90 transition-opacity">编辑资料</button>
+                    </div>
+                </div>
+            </section>
+            <!-- Preferences & Data Management (Bento Style Grid) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Preferences -->
+                <section
+                    class="bg-surface-white rounded-xl p-6 card-shadow border border-outline-variant/30 flex flex-col">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span class="material-symbols-outlined text-primary" data-icon="palette">palette</span>
+                        <h3 class="font-headline-md text-headline-md">偏好设置</h3>
+                    </div>
+                    <div class="space-y-4 flex-1">
+                        <!-- Dark Mode Toggle -->
+                        <div class="flex items-center justify-between py-3 border-b border-outline-variant/20">
+                            <div>
+                                <p class="font-body-lg text-body-lg text-text-primary">深色模式</p>
+                                <p class="font-body-md text-body-md text-text-secondary">根据您的喜好切换主题</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input class="sr-only peer" id="dark-mode-toggle" type="checkbox" value="" />
+                                <div
+                                    class="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-income-teal">
+                                </div>
+                            </label>
+                        </div>
+                        <!-- Notification Toggle -->
+                        <div class="flex items-center justify-between py-3 border-b border-outline-variant/20">
+                            <div>
+                                <p class="font-body-lg text-body-lg text-text-primary">记账提醒</p>
+                                <p class="font-body-md text-body-md text-text-secondary">每日定时提醒记录开支</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input checked="" class="sr-only peer" type="checkbox" value="" />
+                                <div
+                                    class="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-income-teal">
+                                </div>
+                            </label>
+                        </div>
+                        <!-- Currency Selector -->
+                        <div class="flex items-center justify-between py-3">
+                            <div>
+                                <p class="font-body-lg text-body-lg text-text-primary">货币符号</p>
+                                <p class="font-body-md text-body-md text-text-secondary">账本显示的默认货币单位</p>
+                            </div>
+                            <select
+                                class="bg-surface-container-low border-none rounded-lg text-body-md font-body-md text-text-primary focus:ring-2 focus:ring-primary/20">
+                                <option>CNY (¥)</option>
+                                <option>USD ($)</option>
+                                <option>EUR (€)</option>
+                                <option>JPY (¥)</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+                <!-- Data Management -->
+                <section
+                    class="bg-surface-white rounded-xl p-6 card-shadow border border-outline-variant/30 flex flex-col">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span class="material-symbols-outlined text-primary" data-icon="database">database</span>
+                        <h3 class="font-headline-md text-headline-md">数据管理</h3>
+                    </div>
+                    <div class="bg-primary-container/10 p-4 rounded-xl mb-6">
+                        <div class="flex gap-3 items-start">
+                            <span class="material-symbols-outlined text-primary mt-1" data-icon="info">info</span>
+                            <p class="font-body-md text-body-md text-on-primary-container">
+                                我们重视您的隐私。您的所有账务数据均在本地加密，导出功能可帮助您进行离线备份或多平台同步。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-auto space-y-4">
+                        <div class="p-4 bg-surface-container-low rounded-lg border border-outline-variant/30">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-text-secondary"
+                                        data-icon="table_chart">table_chart</span>
+                                    <span class="font-body-md text-body-md font-bold">数据导出</span>
+                                </div>
+                                <span class="font-label-caps text-label-caps text-text-secondary uppercase">PRD
+                                    2.5</span>
+                            </div>
+                            <p class="font-body-md text-body-md text-text-secondary mt-2 mb-4">
+                                将您的全部记账记录导出为标准的 CSV 格式文件。
+                            </p>
+                            <button
+                                class="w-full py-3 bg-primary text-on-primary rounded-lg font-body-lg text-body-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-[0.98]">
+                                <span class="material-symbols-outlined" data-icon="download">download</span>
+                                导出为 CSV
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- About Section -->
+            <section class="bg-surface-white rounded-xl p-6 card-shadow border border-outline-variant/30">
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="material-symbols-outlined text-primary" data-icon="info">info</span>
+                    <h3 class="font-headline-md text-headline-md">关于</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="font-body-lg text-body-lg text-text-primary">版本号</span>
+                            <span class="font-num-md text-num-md text-text-secondary">v1.0.1</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-body-lg text-body-lg text-text-primary">最后检查更新</span>
+                            <span class="font-body-md text-body-md text-text-secondary">2023-10-27</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-3 justify-center">
+                        <a class="flex items-center justify-between p-3 bg-surface-container-low rounded-lg hover:bg-surface-container-high transition-colors group"
+                            href="#">
+                            <span class="font-body-md text-body-md text-text-primary">服务协议</span>
+                            <span
+                                class="material-symbols-outlined text-outline transition-transform group-hover:translate-x-1"
+                                data-icon="chevron_right">chevron_right</span>
+                        </a>
+                        <a class="flex items-center justify-between p-3 bg-surface-container-low rounded-lg hover:bg-surface-container-high transition-colors group"
+                            href="#">
+                            <span class="font-body-md text-body-md text-text-primary">隐私政策</span>
+                            <span
+                                class="material-symbols-outlined text-outline transition-transform group-hover:translate-x-1"
+                                data-icon="chevron_right">chevron_right</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-8 pt-6 border-t border-outline-variant/30 text-center">
+                    <p class="font-label-caps text-label-caps text-text-secondary">© 2023 Serene Ledger Team. All rights
+                        reserved.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+    <!-- Mobile Navigation Bar -->
+    <nav
+        class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-surface-container-lowest dark:bg-surface-container-highest shadow-[0_-4px_12px_rgba(0,106,106,0.04)] rounded-t-xl transition-all duration-300">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="#">
+            <span class="material-symbols-outlined" data-icon="home">home</span>
+            <span class="font-label-caps text-label-caps">首页</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="#">
+            <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+            <span class="font-label-caps text-label-caps">账单</span>
+        </a>
+        <div class="relative -top-6">
+            <button
+                class="bg-primary text-on-primary w-14 h-14 rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform">
+                <span class="material-symbols-outlined text-3xl" data-icon="add">add</span>
+            </button>
+        </div>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="#">
+            <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+            <span class="font-label-caps text-label-caps">预算</span>
+        </a>
+        <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 p-2"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="settings">settings</span>
+            <span class="font-label-caps text-label-caps">设置</span>
+        </a>
+    </nav>
+    <script>
+        // Simple micro-interaction for the dark mode toggle
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        darkModeToggle.addEventListener('change', () => {
+            document.documentElement.classList.toggle('dark');
+            if (document.documentElement.classList.contains('dark')) {
+                console.log('Dark mode enabled');
+            } else {
+                console.log('Light mode enabled');
+            }
+        });
+
+        // Add hover effects for cards
+        const cards = document.querySelectorAll('section');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px)';
+                card.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+                card.style.boxShadow = '0 10px 25px rgba(0, 106, 106, 0.08)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = '0 4px 12px rgba(0, 106, 106, 0.04)';
+            });
+        });
+    </script>
+</body>
+
+</html>

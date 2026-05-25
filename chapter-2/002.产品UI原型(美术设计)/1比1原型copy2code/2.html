@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>注册 - 轻账本 Serene Ledger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#ffdad5",
+                        "text-primary": "#1A1C1E",
+                        "on-secondary-fixed-variant": "#871f19",
+                        "on-primary-fixed-variant": "#004f50",
+                        "surface": "#f8fafb",
+                        "on-tertiary-container": "#6b2c08",
+                        "primary": "#006a6a",
+                        "tertiary": "#924b25",
+                        "on-primary-fixed": "#002020",
+                        "income-teal": "#4EBABA",
+                        "surface-white": "#FFFFFF",
+                        "on-secondary-container": "#710d0b",
+                        "surface-container": "#eceeef",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#006a6a",
+                        "surface-container-high": "#e6e8e9",
+                        "on-secondary-fixed": "#410001",
+                        "secondary": "#a8372d",
+                        "on-tertiary-fixed-variant": "#75340f",
+                        "primary-fixed-dim": "#6ed7d7",
+                        "tertiary-fixed": "#ffdbcc",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#6ed7d7",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-primary-container": "#004747",
+                        "background": "#f8fafb",
+                        "surface-variant": "#e1e3e4",
+                        "outline-variant": "#bcc9c8",
+                        "tertiary-container": "#ee9468",
+                        "secondary-container": "#ff7768",
+                        "on-surface-variant": "#3d4949",
+                        "secondary-fixed-dim": "#ffb4aa",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f2f4f5",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d8dadb",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "on-surface": "#191c1d",
+                        "expense-red": "#F26D5F",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#f8fafb",
+                        "primary-fixed": "#8bf3f3",
+                        "text-secondary": "#6A7178",
+                        "on-tertiary-fixed": "#351000",
+                        "primary-container": "#4ebaba",
+                        "inverse-on-surface": "#eff1f2",
+                        "outline": "#6d7979",
+                        "inverse-surface": "#2e3132",
+                        "on-primary": "#ffffff",
+                        "on-background": "#191c1d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "8px",
+                        "xl": "12px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-tablet": "24px",
+                        "margin-mobile": "16px",
+                        "stack-lg": "24px",
+                        "stack-sm": "8px",
+                        "base": "4px",
+                        "stack-md": "16px",
+                        "gutter": "12px"
+                    },
+                    "fontFamily": {
+                        "manrope": ["Manrope", "sans-serif"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "display-num": ["Manrope"],
+                        "num-md": ["Manrope"],
+                        "label-caps": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "body-md": ["Manrope"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .teal-gradient {
+            background: linear-gradient(135deg, #4ebaba 0%, #006a6a 100%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-surface antialiased overflow-hidden">
+    <!-- Split Screen Layout -->
+    <main class="flex min-h-screen w-full">
+        <!-- Left Side: Calming Teal Brand Area -->
+        <section
+            class="hidden lg:flex lg:w-1/2 teal-gradient relative items-center justify-center p-12 overflow-hidden">
+            <!-- Decorative Atmosphere -->
+            <div
+                class="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] bg-white opacity-5 rounded-full blur-[80px]">
+            </div>
+            <div
+                class="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary-container opacity-10 rounded-full blur-[100px]">
+            </div>
+            <div class="relative z-10 max-w-lg text-white">
+                <!-- Brand Identity -->
+                <div class="mb-12 flex items-center gap-4">
+                    <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-lg">
+                        <span class="material-symbols-outlined text-primary text-[40px]"
+                            data-icon="account_balance_wallet"
+                            style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+                    </div>
+                    <h1 class="font-headline-lg text-[32px] font-extrabold tracking-tight">轻账本</h1>
+                </div>
+                <!-- Mission Statement -->
+                <h2 class="font-headline-md text-[28px] mb-6 leading-tight">繁至极简，美而有序。</h2>
+                <p class="font-body-lg text-white/90 leading-relaxed mb-12 opacity-80">
+                    为您提供最纯粹的财务管理体验，让每一分收支都清晰可见。在宁静的设计中，重塑您的财务生活。
+                </p>
+                <!-- Trust Indicators -->
+                <div class="flex flex-col gap-6">
+                    <div class="flex items-center gap-4 glass-card p-4 rounded-xl transition-all hover:scale-[1.02]">
+                        <div class="flex -space-x-3">
+                            <img alt="User" class="w-10 h-10 rounded-full border-2 border-primary"
+                                data-alt="A professional headshot of a smiling young woman with glasses, styled in a clean, high-key minimalist lighting. The background is a soft neutral gray, maintaining the professional corporate aesthetic."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLCxRFSEX5ZhJ0VO1yhyucHnm-JqMwR3uyb6xHS1z0WRjiHgv7RLk9SL_79AriF612zMuxVnc8WR8pyDyfhSL_6333so_Vdl9Oo6iV15d-E8zldyWM2NWHW0HMxkeqOrEe9mTIEaXmz4Zsw5EpfCvLjksx7y4ETaGhPK402gYFWj249fXxV9Mzl_SC4esP4o0gwIbYR6jRkwoJb2Ib1YlKcoboUHGitcIYmetRrqn9vCDsM0WFBaQg2qVxC8TW6A_PxxZOAY1N4xI" />
+                            <img alt="User" class="w-10 h-10 rounded-full border-2 border-primary"
+                                data-alt="A studio portrait of a confident male professional in a light blue shirt. The lighting is soft and ambient, emphasizing clarity and trustworthiness in a modern digital product context."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgaoPrlLlOmdxMnL-xZnLFgoyUAVrdKia6bSgehbG6tBfztoY18YDjw-cwEWuPUhaB_DKuvFooy3qPPoA0KW7oiyKJyKCxX7WgJ4j4-vF9B-Ry5IQ3j73RlYS3iZ3mnWrSUPcGHFjzCx8iw5SIG9Sf-9LSZwmEMfA7NB85myqYTUymYswYGdy90yjypibTWoVWMkQ7Wp4kxj2BUtWNV9xyNQ5PaFGfgXT74FiTIX8fm50xeNRxIN9kNlPWGRKCkYK7sdeeOU9AArw" />
+                            <img alt="User" class="w-10 h-10 rounded-full border-2 border-primary"
+                                data-alt="A profile photo of an elderly gentleman with a warm smile, conveying wisdom and reliability. High-resolution digital art style with a clean, airy background that fits a financial app theme."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzTtUuHEk5vSCSxvbrSHFP5i3BA2uBoASwLaceUqnjuYkuOwRiZiWlPsCtuoeSK3bLgdr_G2StXyS-ogjT0ePEBKfsfP8ZTJENJktDFzPrar4DopWs7jMGRhTRHeKyLRbpiur_yOkGnvlTBJW8r6wAcn6-IlSi61fuT-TZ5Kdi4zidoc7WgYtiIQ17jx5-6oKZfdnY-bRzmGbWShcBor8vz12-2Lx6bG8CQGhgA1yjRVbqqlYV77ZS1pBXx2WyxGYY1W-lc6ZZxP0" />
+                        </div>
+                        <div>
+                            <p class="font-num-md text-white font-bold">10k+ 用户已加入</p>
+                            <p class="font-body-md text-white/70">值得信赖的极简记账伴侣</p>
+                        </div>
+                    </div>
+                    <!-- Abstract Visualization -->
+                    <div class="mt-8 opacity-40">
+                        <div class="flex items-end gap-1 h-24">
+                            <div class="w-3 bg-white rounded-t-full transition-all duration-1000" style="height: 40%">
+                            </div>
+                            <div class="w-3 bg-white rounded-t-full transition-all duration-1000 delay-100"
+                                style="height: 70%"></div>
+                            <div class="w-3 bg-white rounded-t-full transition-all duration-1000 delay-200"
+                                style="height: 55%"></div>
+                            <div class="w-3 bg-white rounded-t-full transition-all duration-1000 delay-300"
+                                style="height: 90%"></div>
+                            <div class="w-3 bg-white rounded-t-full transition-all duration-1000 delay-400"
+                                style="height: 65%"></div>
+                            <div class="w-3 bg-white rounded-t-full transition-all duration-1000 delay-500"
+                                style="height: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Right Side: Registration Form -->
+        <section class="w-full lg:w-1/2 bg-surface-white flex flex-col justify-between p-8 lg:p-16 relative">
+            <!-- Top Navigation (Mobile/Tablet Logo) -->
+            <div class="flex justify-between items-center lg:hidden mb-12">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-[24px]" data-icon="account_balance_wallet"
+                        style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+                    <span class="font-headline-md text-primary font-bold">轻账本</span>
+                </div>
+            </div>
+            <div class="max-w-md w-full mx-auto self-center">
+                <div class="mb-10">
+                    <h3 class="font-headline-lg text-text-primary text-[32px] mb-2">创建您的账户</h3>
+                    <p class="font-body-md text-text-secondary">开启高效理财的第一步</p>
+                </div>
+                <form class="space-y-6" onsubmit="return false;">
+                    <!-- Username -->
+                    <div class="space-y-2">
+                        <label class="font-label-caps text-on-surface-variant block uppercase tracking-wider"
+                            for="username">用户名</label>
+                        <div class="relative">
+                            <span
+                                class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline"
+                                data-icon="person">person</span>
+                            <input
+                                class="w-full pl-12 pr-4 py-3.5 bg-surface-container-low border-transparent rounded-xl font-body-md text-on-surface focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none placeholder:text-outline-variant"
+                                id="username" placeholder="请设置您的用户名" type="text" />
+                        </div>
+                    </div>
+                    <!-- Password -->
+                    <div class="space-y-2">
+                        <label class="font-label-caps text-on-surface-variant block uppercase tracking-wider"
+                            for="password">密码</label>
+                        <div class="relative">
+                            <span
+                                class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline"
+                                data-icon="lock">lock</span>
+                            <input
+                                class="w-full pl-12 pr-4 py-3.5 bg-surface-container-low border-transparent rounded-xl font-body-md text-on-surface focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none placeholder:text-outline-variant"
+                                id="password" placeholder="请输入 6-20 位密码" type="password" />
+                            <button
+                                class="absolute right-4 top-1/2 -translate-y-1/2 text-outline-variant hover:text-primary transition-colors"
+                                type="button">
+                                <span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Confirm Password -->
+                    <div class="space-y-2">
+                        <label class="font-label-caps text-on-surface-variant block uppercase tracking-wider"
+                            for="confirm_password">确认密码</label>
+                        <div class="relative">
+                            <span
+                                class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline"
+                                data-icon="lock_reset">lock_reset</span>
+                            <input
+                                class="w-full pl-12 pr-4 py-3.5 bg-surface-container-low border-transparent rounded-xl font-body-md text-on-surface focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none placeholder:text-outline-variant"
+                                id="confirm_password" placeholder="请再次输入密码" type="password" />
+                        </div>
+                    </div>
+                    <!-- Agreement -->
+                    <div class="flex items-start gap-3 mt-4">
+                        <input
+                            class="mt-1 w-4 h-4 rounded text-primary focus:ring-primary border-outline-variant cursor-pointer"
+                            id="terms" type="checkbox" />
+                        <label class="font-body-md text-text-secondary cursor-pointer" for="terms">
+                            我已阅读并同意 <a class="text-primary font-semibold hover:underline" href="#">《用户服务协议》</a> 与 <a
+                                class="text-primary font-semibold hover:underline" href="#">《隐私政策》</a>
+                        </label>
+                    </div>
+                    <!-- Register Button -->
+                    <button
+                        class="w-full py-4 bg-primary text-white rounded-xl font-headline-md shadow-[0_8px_16px_rgba(0,106,106,0.15)] hover:bg-on-primary-fixed-variant active:scale-[0.98] transition-all transform duration-200"
+                        type="submit">
+                        立即注册
+                    </button>
+                </form>
+                <!-- Footer Link -->
+                <div class="mt-10 text-center">
+                    <p class="font-body-md text-text-secondary">
+                        已有账号？ <a class="text-primary font-bold hover:underline transition-all" href="#">立即登录</a>
+                    </p>
+                </div>
+            </div>
+            <!-- Global Footer -->
+            <footer class="mt-auto pt-12 text-center border-t border-surface-container lg:border-none">
+                <p class="font-label-caps text-outline-variant">© 2024 轻账本 Serene Ledger. All Rights Reserved.</p>
+            </footer>
+        </section>
+    </main>
+    <script>
+        // Simple Interaction logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = document.querySelectorAll('input');
+
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    const icon = input.previousElementSibling;
+                    if (icon && icon.classList.contains('material-symbols-outlined')) {
+                        icon.classList.add('text-primary');
+                        icon.classList.remove('text-outline');
+                        icon.style.fontVariationSettings = "'FILL' 1";
+                    }
+                });
+
+                input.addEventListener('blur', () => {
+                    const icon = input.previousElementSibling;
+                    if (icon && icon.classList.contains('material-symbols-outlined')) {
+                        icon.classList.remove('text-primary');
+                        icon.classList.add('text-outline');
+                        icon.style.fontVariationSettings = "'FILL' 0";
+                    }
+                });
+            });
+
+            // Password Toggle logic
+            const visibilityBtn = document.querySelector('button[type="button"]');
+            if (visibilityBtn) {
+                visibilityBtn.addEventListener('click', () => {
+                    const input = visibilityBtn.previousElementSibling;
+                    const icon = visibilityBtn.querySelector('span');
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        icon.textContent = 'visibility_off';
+                    } else {
+                        input.type = 'password';
+                        icon.textContent = 'visibility';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的 - 轻账本</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-20..200&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#006a6a',
+            'on-primary': '#ffffff',
+            'primary-container': '#4ebaba',
+            'on-primary-container': '#004747',
+            'income-teal': '#4EBABA',
+            'expense-red': '#F26D5F',
+            'surface': '#f8fafb',
+            'surface-white': '#FFFFFF',
+            'surface-container-low': '#f2f4f5',
+            'surface-container-high': '#e6e8e9',
+            'surface-container-lowest': '#ffffff',
+            'text-primary': '#1A1C1E',
+            'text-secondary': '#6A7178',
+            'on-surface': '#191c1d',
+            'on-surface-variant': '#3d4949',
+            'outline': '#6d7979',
+            'outline-variant': '#bcc9c8',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Manrope', sans-serif; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .card-shadow { box-shadow: 0 4px 12px rgba(0, 106, 106, 0.04); }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+  <!-- Desktop Sidebar -->
+  <aside class="hidden lg:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-lowest border-r border-outline-variant z-40 p-6">
+    <div class="mb-10">
+      <h1 class="text-income-teal text-2xl font-bold">轻账本</h1>
+    </div>
+    <nav class="flex-1 space-y-2">
+      <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="home.html">
+        <span class="material-symbols-outlined">home</span><span class="text-sm">首页</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="records.html">
+        <span class="material-symbols-outlined">analytics</span><span class="text-sm">账单</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="budget.html">
+        <span class="material-symbols-outlined">account_balance_wallet</span><span class="text-sm">预算</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg transition-all" href="profile.html">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span><span class="text-sm font-medium">我的</span>
+      </a>
+    </nav>
+    <button class="mb-4 w-full bg-primary text-white rounded-xl py-3 px-4 flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-all" onclick="window.location.href='add-record.html'">
+      <span class="material-symbols-outlined">add</span><span class="text-sm font-medium">记一笔</span>
+    </button>
+    <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all mt-auto" href="settings.html">
+      <span class="material-symbols-outlined">settings</span><span class="text-sm">设置</span>
+    </a>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="lg:ml-64 min-h-screen p-6 lg:p-10 pb-24 lg:pb-10">
+    <header class="mb-8">
+      <h2 class="text-text-primary text-2xl font-bold">我的</h2>
+      <p class="text-text-secondary text-sm mt-1">个人信息和统计</p>
+    </header>
+
+    <!-- User Info Card -->
+    <section class="bg-surface-white rounded-2xl card-shadow border border-surface-container-low p-6 mb-6">
+      <div class="flex items-center gap-4">
+        <div class="w-20 h-20 rounded-full bg-primary-container flex items-center justify-center">
+          <span class="material-symbols-outlined text-4xl text-on-primary-container">person</span>
+        </div>
+        <div class="flex-1">
+          <h3 class="text-text-primary text-xl font-bold" id="userName">用户</h3>
+          <p class="text-text-secondary text-sm" id="userEmail">user@example.com</p>
+        </div>
+        <button class="px-4 py-2 border border-outline-variant rounded-lg text-text-secondary text-sm hover:bg-surface-container-low transition-colors">编辑</button>
+      </div>
+    </section>
+
+    <!-- Statistics -->
+    <section class="bg-surface-white rounded-2xl card-shadow border border-surface-container-low p-6 mb-6">
+      <h3 class="text-text-primary font-semibold mb-4">本月统计</h3>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="text-center p-4 bg-surface-container-low rounded-xl">
+          <p class="text-text-secondary text-xs mb-2">记录总数</p>
+          <p class="text-2xl font-bold text-primary" id="totalRecords">0</p>
+        </div>
+        <div class="text-center p-4 bg-surface-container-low rounded-xl">
+          <p class="text-text-secondary text-xs mb-2">总收入</p>
+          <p class="text-2xl font-bold text-income-teal" id="totalIncome">¥0</p>
+        </div>
+        <div class="text-center p-4 bg-surface-container-low rounded-xl">
+          <p class="text-text-secondary text-xs mb-2">总支出</p>
+          <p class="text-2xl font-bold text-expense-red" id="totalExpense">¥0</p>
+        </div>
+        <div class="text-center p-4 bg-surface-container-low rounded-xl">
+          <p class="text-text-secondary text-xs mb-2">最高支出</p>
+          <p class="text-2xl font-bold text-text-primary" id="maxExpense">¥0</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Category Breakdown -->
+    <section class="bg-surface-white rounded-2xl card-shadow border border-surface-container-low p-6 mb-6">
+      <h3 class="text-text-primary font-semibold mb-4">支出分类</h3>
+      <div id="categoryBreakdown" class="space-y-3"></div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="bg-surface-white rounded-2xl card-shadow border border-surface-container-low p-6">
+      <h3 class="text-text-primary font-semibold mb-4">快捷操作</h3>
+      <div class="grid grid-cols-2 gap-4">
+        <button class="flex items-center gap-3 p-4 bg-surface-container-low rounded-xl hover:bg-surface-container-high transition-colors" onclick="window.location.href='add-record.html'">
+          <span class="material-symbols-outlined text-primary">add</span>
+          <span class="text-text-primary font-medium">记一笔</span>
+        </button>
+        <button class="flex items-center gap-3 p-4 bg-surface-container-low rounded-xl hover:bg-surface-container-high transition-colors" onclick="exportData()">
+          <span class="material-symbols-outlined text-primary">download</span>
+          <span class="text-text-primary font-medium">导出数据</span>
+        </button>
+        <button class="flex items-center gap-3 p-4 bg-surface-container-low rounded-xl hover:bg-surface-container-high transition-colors" onclick="window.location.href='settings.html'">
+          <span class="material-symbols-outlined text-primary">settings</span>
+          <span class="text-text-primary font-medium">设置</span>
+        </button>
+        <button class="flex items-center gap-3 p-4 bg-surface-container-low rounded-xl hover:bg-surface-container-high transition-colors" id="logoutBtn">
+          <span class="material-symbols-outlined text-expense-red">logout</span>
+          <span class="text-expense-red font-medium">退出登录</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-surface-container-lowest shadow-[0_-4px_12px_rgba(0,106,106,0.04)] rounded-t-xl">
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="home.html">
+      <span class="material-symbols-outlined">home</span><span class="text-xs">首页</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="records.html">
+      <span class="material-symbols-outlined">analytics</span><span class="text-xs">账单</span>
+    </a>
+    <div class="relative -top-6">
+      <button class="bg-primary text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform" onclick="window.location.href='add-record.html'">
+        <span class="material-symbols-outlined text-3xl">add</span>
+      </button>
+    </div>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="budget.html">
+      <span class="material-symbols-outlined">account_balance_wallet</span><span class="text-xs">预算</span>
+    </a>
+    <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1" href="profile.html">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span><span class="text-xs font-bold uppercase tracking-wider">我的</span>
+    </a>
+  </nav>
+
+  <script src="../scripts/app.js"></script>
+  <script>
+    function updateUI() {
+      const monthlyRecords = AppState.getMonthlyRecords();
+      const totals = AppState.getMonthlyTotals();
+
+      document.getElementById('userName').textContent = AppState.user?.name || '用户';
+      document.getElementById('userEmail').textContent = AppState.user?.email || 'user@example.com';
+      document.getElementById('totalRecords').textContent = monthlyRecords.length;
+      document.getElementById('totalIncome').textContent = `¥${totals.income.toFixed(0)}`;
+      document.getElementById('totalExpense').textContent = `¥${totals.expense.toFixed(0)}`;
+
+      const maxExpense = monthlyRecords.filter(r => r.type === 'expense').reduce((max, r) => Math.max(max, r.amount), 0);
+      document.getElementById('maxExpense').textContent = `¥${maxExpense > 0 ? maxExpense.toFixed(0) : '0'}`;
+
+      const categoryBreakdown = document.getElementById('categoryBreakdown');
+      const expenseByCategory = {};
+      monthlyRecords.filter(r => r.type === 'expense').forEach(r => {
+        expenseByCategory[r.category] = (expenseByCategory[r.category] || 0) + r.amount;
+      });
+
+      const totalExpenseAmt = totals.expense;
+      const sortedCategories = Object.entries(expenseByCategory).sort((a, b) => b[1] - a[1]);
+
+      if (sortedCategories.length === 0) {
+        categoryBreakdown.innerHTML = '<p class="text-text-secondary text-sm text-center py-4">暂无支出记录</p>';
+      } else {
+        categoryBreakdown.innerHTML = sortedCategories.map(([catId, amount]) => {
+          const cat = CATEGORIES.expense.find(c => c.id === catId);
+          const percent = totalExpenseAmt > 0 ? (amount / totalExpenseAmt) * 100 : 0;
+          return `
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-expense-red/10 flex items-center justify-center">
+                <span class="material-symbols-outlined text-expense-red">${cat?.icon || 'receipt'}</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex justify-between mb-1">
+                  <span class="text-text-primary text-sm font-medium">${cat?.name || catId}</span>
+                  <span class="text-text-secondary text-sm">¥${amount.toFixed(0)}</span>
+                </div>
+                <div class="w-full h-2 bg-surface-container-low rounded-full overflow-hidden">
+                  <div class="h-full bg-expense-red rounded-full" style="width: ${percent}%"></div>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    function exportData() {
+      const records = AppState.records;
+      if (records.length === 0) { showToast('暂无数据可导出', 'error'); return; }
+      const headers = ['日期', '类型', '类别', '金额', '备注'];
+      const rows = records.map(r => [new Date(r.createdAt).toLocaleDateString('zh-CN'), r.type === 'expense' ? '支出' : '收入', CATEGORIES[r.type]?.find(c => c.id === r.category)?.name || r.category, r.amount.toFixed(2), r.note || '']);
+      const csv = [headers, ...rows].map(row => row.join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `轻账本导出_${new Date().toISOString().split('T')[0]}.csv`;
+      link.click();
+      showToast('数据已导出', 'success');
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      if (confirm('确定要退出登录吗？')) { AppState.logout(); window.location.href = '../../login.html'; }
+    });
+
+    updateUI();
+  </script>
+</body>
+</html>

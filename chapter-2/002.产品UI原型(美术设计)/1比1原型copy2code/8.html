@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>轻账本 - 记一笔</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#8bf3f3",
+                        "surface-tint": "#006a6a",
+                        "outline": "#6d7979",
+                        "inverse-on-surface": "#eff1f2",
+                        "on-secondary-fixed": "#410001",
+                        "text-secondary": "#6A7178",
+                        "income-teal": "#4EBABA",
+                        "secondary-fixed": "#ffdad5",
+                        "text-primary": "#1A1C1E",
+                        "on-surface": "#191c1d",
+                        "surface-container": "#eceeef",
+                        "surface-container-highest": "#e1e3e4",
+                        "surface": "#f8fafb",
+                        "expense-red": "#F26D5F",
+                        "tertiary-container": "#ee9468",
+                        "on-primary-fixed-variant": "#004f50",
+                        "tertiary-fixed": "#ffdbcc",
+                        "tertiary": "#924b25",
+                        "outline-variant": "#bcc9c8",
+                        "inverse-primary": "#6ed7d7",
+                        "on-primary-fixed": "#002020",
+                        "on-secondary-container": "#710d0b",
+                        "secondary": "#a8372d",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2e3132",
+                        "on-surface-variant": "#3d4949",
+                        "surface-container-high": "#e6e8e9",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#351000",
+                        "surface-variant": "#e1e3e4",
+                        "surface-dim": "#d8dadb",
+                        "on-primary-container": "#004747",
+                        "surface-white": "#FFFFFF",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#ff7768",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#75340f",
+                        "secondary-fixed-dim": "#ffb4aa",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f8fafb",
+                        "primary-fixed-dim": "#6ed7d7",
+                        "surface-dim": "#d8dadb",
+                        "on-primary-container": "#004747",
+                        "surface-white": "#FFFFFF",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#ff7768",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#75340f",
+                        "secondary-fixed-dim": "#ffb4aa",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f8fafb",
+                        "primary-fixed-dim": "#6ed7d7",
+                        "surface-container-low": "#f2f4f5",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#6b2c08",
+                        "on-background": "#191c1d",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#4ebaba",
+                        "primary": "#006a6a",
+                        "background": "#f8fafb",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "on-secondary-fixed-variant": "#871f19"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "base": "4px",
+                        "stack-md": "16px",
+                        "stack-lg": "24px",
+                        "stack-sm": "8px",
+                        "margin-tablet": "24px",
+                        "gutter": "12px"
+                    },
+                    "fontFamily": {
+                        "num-md": ["Manrope"],
+                        "label-caps": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "headline-lg-mobile": ["Manrope"],
+                        "display-num": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "headline-md": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "num-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "700" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-num": ["40px", { "lineHeight": "48px", "letterSpacing": "-1px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .active-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen">
+    <!-- Web Side Navigation (Desktop Only) -->
+    <aside
+        class="hidden md:flex flex-col h-full p-stack-md border-r border-outline-variant h-screen w-64 fixed left-0 top-0 bg-surface-container-lowest shadow-sm z-50">
+        <div class="mb-stack-lg">
+            <h1 class="font-headline-lg text-headline-lg text-income-teal">轻账本</h1>
+            <p class="font-body-md text-body-md text-on-surface-variant">Minimalist Finance</p>
+        </div>
+        <nav class="flex-1 space-y-2">
+            <div
+                class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all cursor-pointer">
+                <span class="material-symbols-outlined">home</span>
+                <span class="font-body-md text-body-md">首页</span>
+            </div>
+            <div
+                class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all cursor-pointer">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="font-body-md text-body-md">账单</span>
+            </div>
+            <div
+                class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all cursor-pointer">
+                <span class="material-symbols-outlined">account_balance_wallet</span>
+                <span class="font-body-md text-body-md">预算</span>
+            </div>
+            <div
+                class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all cursor-pointer">
+                <span class="material-symbols-outlined">person</span>
+                <span class="font-body-md text-body-md">我的</span>
+            </div>
+        </nav>
+        <button
+            class="mb-4 w-full bg-primary-container text-on-primary-container rounded-lg font-bold py-3 px-4 flex items-center justify-center gap-2 transition-transform duration-200 active:scale-95 shadow-sm">
+            <span class="material-symbols-outlined">add</span>
+            <span class="font-body-md text-body-md">记一笔</span>
+        </button>
+        <div
+            class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all cursor-pointer mt-auto">
+            <span class="material-symbols-outlined">settings</span>
+            <span class="font-body-md text-body-md">设置</span>
+        </div>
+    </aside>
+    <!-- Main Content Area -->
+    <main class="md:ml-64 min-h-screen flex items-center justify-center p-4 md:p-8 bg-surface-bright">
+        <!-- Focused Add Record Card -->
+        <div
+            class="w-full max-w-2xl bg-surface-white rounded-[12px] shadow-[0_4px_12px_rgba(0,106,106,0.04)] overflow-hidden flex flex-col md:flex-row">
+            <!-- Left Side: Interactive Input -->
+            <div class="w-full md:w-7/12 p-stack-lg flex flex-col gap-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-headline-md text-headline-md text-primary">记一笔</h2>
+                    <button class="md:hidden text-on-surface-variant">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                <!-- Type Toggle -->
+                <div class="bg-surface-container-low p-1 rounded-xl flex">
+                    <button
+                        class="flex-1 py-2 text-center rounded-lg font-body-lg text-body-lg bg-expense-red text-white transition-all shadow-sm"
+                        id="type-expense">支出</button>
+                    <button
+                        class="flex-1 py-2 text-center rounded-lg font-body-lg text-body-lg text-on-surface-variant hover:bg-surface-variant transition-all"
+                        id="type-income">收入</button>
+                </div>
+                <!-- Amount Input Section -->
+                <div class="flex flex-col gap-2">
+                    <label class="font-label-caps text-label-caps text-on-surface-variant">金额</label>
+                    <div
+                        class="flex items-end gap-2 border-b-2 border-outline-variant focus-within:border-primary transition-colors pb-2">
+                        <span class="font-display-num text-display-num text-primary opacity-50">¥</span>
+                        <input autofocus=""
+                            class="w-full border-none bg-transparent font-display-num text-display-num text-primary focus:ring-0 p-0"
+                            type="text" value="0.00" />
+                    </div>
+                </div>
+                <!-- Date and Category Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-2">
+                        <label class="font-label-caps text-label-caps text-on-surface-variant">日期</label>
+                        <div
+                            class="flex items-center gap-2 p-3 bg-surface-container-low rounded-xl cursor-pointer hover:bg-surface-container-high transition-colors">
+                            <span class="material-symbols-outlined text-primary">calendar_today</span>
+                            <span class="font-body-md text-body-md text-on-surface">今天, 5月24日</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="font-label-caps text-label-caps text-on-surface-variant">备注</label>
+                        <div class="flex items-center gap-2 p-3 bg-surface-container-low rounded-xl">
+                            <span class="material-symbols-outlined text-primary">edit_note</span>
+                            <input
+                                class="w-full border-none bg-transparent font-body-md text-body-md focus:ring-0 p-0 text-on-surface"
+                                placeholder="记录点什么..." type="text" />
+                        </div>
+                    </div>
+                </div>
+                <!-- Category Selector -->
+                <div class="flex flex-col gap-4">
+                    <label class="font-label-caps text-label-caps text-on-surface-variant">选择类别</label>
+                    <div
+                        class="grid grid-cols-4 md:grid-cols-4 gap-gutter overflow-y-auto max-h-[280px] pr-2 hide-scrollbar">
+                        <!-- Category Items -->
+                        <div
+                            class="flex flex-col items-center gap-2 group cursor-pointer active:scale-95 transition-transform">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-primary-container text-on-primary-container flex items-center justify-center shadow-sm">
+                                <span class="material-symbols-outlined active-fill">restaurant</span>
+                            </div>
+                            <span class="font-label-caps text-label-caps text-primary">餐饮</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-2 group cursor-pointer active:scale-95 transition-transform">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-surface-container-high text-on-surface-variant flex items-center justify-center hover:bg-surface-variant transition-colors">
+                                <span class="material-symbols-outlined">directions_bus</span>
+                            </div>
+                            <span class="font-label-caps text-label-caps text-on-surface-variant">交通</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-2 group cursor-pointer active:scale-95 transition-transform">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-surface-container-high text-on-surface-variant flex items-center justify-center hover:bg-surface-variant transition-colors">
+                                <span class="material-symbols-outlined">shopping_bag</span>
+                            </div>
+                            <span class="font-label-caps text-label-caps text-on-surface-variant">购物</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-2 group cursor-pointer active:scale-95 transition-transform">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-surface-container-high text-on-surface-variant flex items-center justify-center hover:bg-surface-variant transition-colors">
+                                <span class="material-symbols-outlined">home</span>
+                            </div>
+                            <span class="font-label-caps text-label-caps text-on-surface-variant">居住</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-2 group cursor-pointer active:scale-95 transition-transform">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-surface-container-high text-on-surface-variant flex items-center justify-center hover:bg-surface-variant transition-colors">
+                                <span class="material-symbols-outlined">sports_esports</span>
+                            </div>
+                            <span class="font-label-caps text-label-caps text-on-surface-variant">娱乐</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-2 group cursor-pointer active:scale-95 transition-transform">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-surface-container-high text-on-surface-variant flex items-center justify-center hover:bg-surface-variant transition-colors">
+                                <span class="material-symbols-outlined">medical_services</span>
+                            </div>
+                            <span class="font-label-caps text-label-caps text-on-surface-variant">医疗</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-2 group cursor-pointer active:scale-95 transition-transform">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-surface-container-high text-on-surface-variant flex items-center justify-center hover:bg-surface-variant transition-colors">
+                                <span class="material-symbols-outlined">school</span>
+                            </div>
+                            <span class="font-label-caps text-label-caps text-on-surface-variant">教育</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center gap-2 group cursor-pointer active:scale-95 transition-transform">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-surface-container-high text-on-surface-variant flex items-center justify-center hover:bg-surface-variant transition-colors">
+                                <span class="material-symbols-outlined">more_horiz</span>
+                            </div>
+                            <span class="font-label-caps text-label-caps text-on-surface-variant">其他</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer Actions -->
+                <div class="flex gap-4 mt-4">
+                    <button
+                        class="flex-1 py-3 px-6 rounded-xl border border-outline-variant text-on-surface-variant font-headline-md text-headline-md hover:bg-surface-container-low transition-colors">
+                        取消
+                    </button>
+                    <button
+                        class="flex-[2] py-3 px-6 rounded-xl bg-primary text-white font-headline-md text-headline-md hover:opacity-90 active:scale-[0.98] transition-all shadow-md">
+                        保存记录
+                    </button>
+                </div>
+            </div>
+            <!-- Right Side: Aesthetic Context / Illustration (Desktop Only) -->
+            <div class="hidden md:block w-5/12 bg-primary relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-primary to-surface-tint opacity-80 z-10"></div>
+                <img class="absolute inset-0 w-full h-full object-cover"
+                    data-alt="A serene and minimalist home office workspace at golden hour. A clean wooden desk holds a notebook, a sleek tablet, and a small green plant. The soft evening sunlight streams through a large window creating a calm, productive atmosphere that emphasizes clarity and financial organization. The aesthetic is modern and lightweight, using cool teal tones and warm lighting to evoke a sense of professional reliability and calm efficiency."
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9Nmgv7hEg-EOB0cm6WY_ULh31Stc9af49WfCh8riQLUeLFwps3qsesmVjcXCwTTAqbBrt1cdua40grb4rYBq53T1xyaimF83_vyhGi7YVaTwkUag8-ipGnQAJJSkiNg7CwcbL1oMddlgpdNrcJ2s2QCCesXSbjMiDXoWTQx7jgf_00RxpQpRlycpQF1c4UK2KWnf0Zd8UzeN1pEMzKbQPiYpkLcb-WegRSpQNirbQbAmejxHgCphktM2HqyOcjUQ0N2NQz3afHnU" />
+                <div class="relative z-20 p-stack-lg h-full flex flex-col justify-end text-white">
+                    <div class="mb-4">
+                        <span class="material-symbols-outlined text-[48px] opacity-80">account_balance</span>
+                    </div>
+                    <h3 class="font-headline-lg text-headline-lg mb-2">掌握每一分</h3>
+                    <p class="font-body-md text-body-md opacity-80">
+                        记录不仅是为了回顾，更是为了更有计划的明天。每一笔细小的支出都在定义你的生活方式。
+                    </p>
+                    <div class="mt-8 flex gap-2">
+                        <div class="w-2 h-2 rounded-full bg-white"></div>
+                        <div class="w-2 h-2 rounded-full bg-white/30"></div>
+                        <div class="w-2 h-2 rounded-full bg-white/30"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Bottom Navigation (Mobile Only) -->
+    <nav
+        class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-surface-container-lowest shadow-[0_-4px_12px_rgba(0,106,106,0.04)] rounded-t-xl">
+        <div class="flex flex-col items-center justify-center text-on-surface-variant">
+            <span class="material-symbols-outlined">home</span>
+            <span class="font-label-caps text-label-caps">首页</span>
+        </div>
+        <div class="flex flex-col items-center justify-center text-on-surface-variant">
+            <span class="material-symbols-outlined">analytics</span>
+            <span class="font-label-caps text-label-caps">账单</span>
+        </div>
+        <div
+            class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1">
+            <span class="material-symbols-outlined">add</span>
+            <span class="font-label-caps text-label-caps">记账</span>
+        </div>
+        <div class="flex flex-col items-center justify-center text-on-surface-variant">
+            <span class="material-symbols-outlined">person</span>
+            <span class="font-label-caps text-label-caps">我的</span>
+        </div>
+    </nav>
+    <script>
+        // Simple micro-interaction for Type Toggle
+        const expenseBtn = document.getElementById('type-expense');
+        const incomeBtn = document.getElementById('type-income');
+
+        expenseBtn.addEventListener('click', () => {
+            expenseBtn.classList.add('bg-expense-red', 'text-white', 'shadow-sm');
+            expenseBtn.classList.remove('text-on-surface-variant', 'hover:bg-surface-variant');
+            incomeBtn.classList.remove('bg-income-teal', 'text-white', 'shadow-sm');
+            incomeBtn.classList.add('text-on-surface-variant', 'hover:bg-surface-variant');
+        });
+
+        incomeBtn.addEventListener('click', () => {
+            incomeBtn.classList.add('bg-income-teal', 'text-white', 'shadow-sm');
+            incomeBtn.classList.remove('text-on-surface-variant', 'hover:bg-surface-variant');
+            expenseBtn.classList.remove('bg-expense-red', 'text-white', 'shadow-sm');
+            expenseBtn.classList.add('text-on-surface-variant', 'hover:bg-surface-variant');
+        });
+
+        // Category Selection micro-interaction
+        const categoryItems = document.querySelectorAll('.group.cursor-pointer');
+        categoryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Reset others
+                categoryItems.forEach(i => {
+                    const iconBox = i.querySelector('div');
+                    const label = i.querySelector('span:not(.material-symbols-outlined)');
+                    const icon = i.querySelector('.material-symbols-outlined');
+                    iconBox.className = 'w-12 h-12 rounded-xl bg-surface-container-high text-on-surface-variant flex items-center justify-center hover:bg-surface-variant transition-colors';
+                    label.className = 'font-label-caps text-label-caps text-on-surface-variant';
+                    icon.style.fontVariationSettings = "'FILL' 0";
+                });
+                // Highlight active
+                const activeBox = item.querySelector('div');
+                const activeLabel = item.querySelector('span:not(.material-symbols-outlined)');
+                const activeIcon = item.querySelector('.material-symbols-outlined');
+                activeBox.className = 'w-12 h-12 rounded-xl bg-primary-container text-on-primary-container flex items-center justify-center shadow-sm';
+                activeLabel.className = 'font-label-caps text-label-caps text-primary';
+                activeIcon.style.fontVariationSettings = "'FILL' 1";
+            });
+        });
+    </script>
+</body>
+
+</html>

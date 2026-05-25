@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "income-teal": "#4EBABA",
+                        "surface-container-low": "#f2f4f5",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#ff7768",
+                        "on-tertiary-fixed": "#351000",
+                        "secondary": "#a8372d",
+                        "on-background": "#191c1d",
+                        "surface-tint": "#006a6a",
+                        "inverse-primary": "#6ed7d7",
+                        "primary": "#006a6a",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#004f50",
+                        "on-primary-fixed": "#002020",
+                        "text-primary": "#1A1C1E",
+                        "surface-variant": "#e1e3e4",
+                        "on-surface-variant": "#3d4949",
+                        "inverse-on-surface": "#eff1f2",
+                        "on-tertiary-container": "#6b2c08",
+                        "on-primary-container": "#004747",
+                        "secondary-fixed": "#ffdad5",
+                        "primary-fixed": "#8bf3f3",
+                        "tertiary-fixed": "#ffdbcc",
+                        "surface-dim": "#d8dadb",
+                        "outline-variant": "#bcc9c8",
+                        "tertiary-container": "#ee9468",
+                        "surface-container": "#eceeef",
+                        "on-secondary": "#ffffff",
+                        "expense-red": "#F26D5F",
+                        "on-tertiary-fixed-variant": "#75340f",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#710d0b",
+                        "surface-container-highest": "#e1e3e4",
+                        "secondary-fixed-dim": "#ffb4aa",
+                        "on-secondary-fixed-variant": "#871f19",
+                        "tertiary": "#924b25",
+                        "outline": "#6d7979",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "surface-container-high": "#e6e8e9",
+                        "surface": "#f8fafb",
+                        "text-secondary": "#6A7178",
+                        "inverse-surface": "#2e3132",
+                        "background": "#f8fafb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#191c1d",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#6ed7d7",
+                        "primary-container": "#4ebaba",
+                        "surface-white": "#FFFFFF",
+                        "surface-bright": "#f8fafb",
+                        "on-secondary-fixed": "#410001",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "12px",
+                        "stack-sm": "8px",
+                        "margin-tablet": "24px",
+                        "base": "4px",
+                        "margin-mobile": "16px",
+                        "stack-md": "16px",
+                        "stack-lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Manrope"],
+                        "label-caps": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "display-num": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "num-md": ["Manrope"],
+                        "headline-lg-mobile": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "700" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-num": ["40px", { "lineHeight": "48px", "letterSpacing": "-1px", "fontWeight": "700" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "num-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            user-select: none;
+        }
+
+        body {
+            background-color: #f8fafb;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 12px rgba(0, 106, 106, 0.04);
+        }
+
+        .glass-overlay {
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+
+<body class="font-body-md text-on-surface">
+    <!-- TopAppBar -->
+    <header
+        class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-surface dark:bg-background shadow-sm">
+        <div class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim">轻账本</div>
+        <div class="flex gap-stack-md">
+            <span
+                class="material-symbols-outlined text-primary cursor-pointer active:opacity-80 transition-colors hover:bg-surface-container-low p-2 rounded-full"
+                data-icon="calendar_today">calendar_today</span>
+            <span
+                class="material-symbols-outlined text-primary cursor-pointer active:opacity-80 transition-colors hover:bg-surface-container-low p-2 rounded-full border-2 border-primary"
+                data-icon="account_circle">account_circle</span>
+        </div>
+    </header>
+    <!-- SideNavBar (Desktop Only) -->
+    <aside
+        class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 p-stack-md border-r border-outline-variant bg-surface-container-lowest dark:bg-surface-dim shadow-sm z-40 pt-20">
+        <div class="mb-stack-lg px-2">
+            <div class="font-headline-lg text-headline-lg text-income-teal">轻账本</div>
+            <div class="font-body-md text-body-md text-on-surface-variant">Minimalist Finance</div>
+        </div>
+        <nav class="flex-1 space-y-2">
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 active:scale-95"
+                href="#">
+                <span class="material-symbols-outlined" data-icon="home">home</span>
+                <span class="font-body-md text-body-md">首页</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 active:scale-95"
+                href="#">
+                <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                <span class="font-body-md text-body-md">账单</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 active:scale-95"
+                href="#">
+                <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+                <span class="font-body-md text-body-md">预算</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold transition-all duration-200 active:scale-95"
+                href="#">
+                <span class="material-symbols-outlined" data-icon="person">person</span>
+                <span class="font-body-md text-body-md">我的</span>
+            </a>
+        </nav>
+        <button
+            class="mb-stack-md bg-income-teal text-white font-bold py-3 rounded-xl shadow-md transition-transform active:scale-95">记一笔</button>
+        <div class="mt-auto">
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all"
+                href="#">
+                <span class="material-symbols-outlined" data-icon="settings">settings</span>
+                <span class="font-body-md text-body-md">设置</span>
+            </a>
+        </div>
+    </aside>
+    <!-- Main Content Canvas -->
+    <main class="pt-20 pb-24 md:pb-8 md:pl-72 px-margin-mobile max-w-4xl mx-auto">
+        <!-- Profile Header Card -->
+        <section class="bg-surface-white rounded-xl p-6 card-shadow mb-stack-lg relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-primary-container opacity-10 rounded-full -mr-16 -mt-16">
+            </div>
+            <div class="flex items-center gap-stack-md relative z-10">
+                <div
+                    class="w-20 h-20 rounded-full border-4 border-surface-container-low overflow-hidden bg-surface-container-high flex items-center justify-center">
+                    <img alt="User Avatar" class="w-full h-full object-cover"
+                        data-alt="A professional close-up portrait of a friendly young man with short dark hair and a neat beard, wearing a clean white t-shirt. The background is a soft-focus minimalist interior with clean lines and natural light. The aesthetic is bright and modern, using a light-mode color palette that emphasizes clarity and trust. High-key lighting creates a professional yet approachable atmosphere."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1mgJNdT_tewGR9aTBJDBgzNhTnrj6nNWl77x53UOAEMIVJy736utNsgZT9E9d4Ney6XrYxMUXOod-mRJxtx1_JD7w9XYgtRh3Z9GCVu61AGIrpM2GL6IxcqDL9AIJ6tc6SWPOxJLmZ5r5lXkPbdM-vFfn9EIGh_uSOJmAz9kZYjjhiOqwJqNwDvK_7M9uul9MXOxXFRbXZEEWwQggOodmAT7j82yTWzPJ-J3FoyxZ9tJY0xWSb3JoJUXWpnTvt9mAGuOqjbxm27U">
+                </div>
+                <div>
+                    <h1
+                        class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-text-primary">
+                        Alex Chen</h1>
+                    <p class="font-body-md text-body-md text-text-secondary">加入于 2023年5月12日</p>
+                    <div class="mt-2 flex items-center gap-1 text-income-teal">
+                        <span class="material-symbols-outlined text-[16px]" data-icon="verified"
+                            style="font-variation-settings: 'FILL' 1;">verified</span>
+                        <span class="text-[12px] font-bold">高级会员</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Guest Mode Alert -->
+        <section
+            class="bg-secondary-container/10 border border-secondary-container/20 p-4 rounded-xl mb-stack-lg flex items-start gap-3">
+            <span class="material-symbols-outlined text-secondary" data-icon="error_outline">error_outline</span>
+            <div>
+                <p class="font-bold text-secondary">访客模式已开启</p>
+                <p class="text-[13px] text-on-secondary-container/80">您的数据当前仅保存在本地。登录后可开启多端同步与云端备份功能。</p>
+            </div>
+            <button
+                class="ml-auto text-secondary font-bold text-sm underline active:opacity-60 transition-opacity">去登录</button>
+        </section>
+        <!-- Settings List Groups -->
+        <div class="space-y-stack-lg">
+            <!-- Group: Account -->
+            <div>
+                <h2 class="px-2 mb-2 font-label-caps text-label-caps text-text-secondary">账号设置</h2>
+                <div class="bg-surface-white rounded-xl card-shadow divide-y divide-surface-container">
+                    <button
+                        class="w-full flex items-center justify-between p-4 hover:bg-surface-container-low transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="material-symbols-outlined text-text-secondary group-active:text-primary transition-colors"
+                                data-icon="lock_open">lock_open</span>
+                            <span class="font-body-md">修改密码</span>
+                        </div>
+                        <span class="material-symbols-outlined text-outline-variant"
+                            data-icon="chevron_right">chevron_right</span>
+                    </button>
+                    <button
+                        class="w-full flex items-center justify-between p-4 hover:bg-surface-container-low transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="material-symbols-outlined text-text-secondary group-active:text-primary transition-colors"
+                                data-icon="logout">logout</span>
+                            <span class="font-body-md text-expense-red">退出登录</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <!-- Group: Data Management -->
+            <div>
+                <h2 class="px-2 mb-2 font-label-caps text-label-caps text-text-secondary">数据管理</h2>
+                <div class="bg-surface-white rounded-xl card-shadow divide-y divide-surface-container">
+                    <button
+                        class="w-full flex items-center justify-between p-4 hover:bg-surface-container-low transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="material-symbols-outlined text-text-secondary group-active:text-primary transition-colors"
+                                data-icon="cloud_upload">cloud_upload</span>
+                            <span class="font-body-md">立即备份</span>
+                        </div>
+                        <span class="text-[12px] text-text-secondary mr-2">上次：2小时前</span>
+                    </button>
+                    <button
+                        class="w-full flex items-center justify-between p-4 hover:bg-surface-container-low transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="material-symbols-outlined text-text-secondary group-active:text-primary transition-colors"
+                                data-icon="csv">csv</span>
+                            <span class="font-body-md">导出数据 (CSV)</span>
+                        </div>
+                        <span class="material-symbols-outlined text-outline-variant"
+                            data-icon="download">download</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Group: App Interaction -->
+            <div>
+                <h2 class="px-2 mb-2 font-label-caps text-label-caps text-text-secondary">偏好设置</h2>
+                <div class="bg-surface-white rounded-xl card-shadow p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-text-secondary"
+                                data-icon="person_search">person_search</span>
+                            <div>
+                                <span class="font-body-md block">访客模式</span>
+                                <span class="text-[11px] text-text-secondary">禁用所有云端特性</span>
+                            </div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input checked="" class="sr-only peer" id="guestToggle" type="checkbox">
+                            <div
+                                class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-income-teal">
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!-- Group: About -->
+            <div>
+                <h2 class="px-2 mb-2 font-label-caps text-label-caps text-text-secondary">关于</h2>
+                <div class="bg-surface-white rounded-xl card-shadow p-6 text-center">
+                    <div
+                        class="w-16 h-16 bg-primary-container/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <span class="material-symbols-outlined text-primary text-3xl" data-icon="account_balance_wallet"
+                            style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md text-primary mb-1">轻账本</h3>
+                    <p class="text-text-secondary text-sm mb-4">极简生活，精明理财</p>
+                    <div
+                        class="inline-block bg-surface-container-low px-3 py-1 rounded-full text-xs font-bold text-text-secondary mb-6">
+                        v1.0.1</div>
+                    <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                        轻账本是一款专注于纯粹记账体验的工具。我们摒弃繁杂，只为让您更清晰地掌控财务每一笔流向。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- BottomNavBar (Mobile Only) -->
+    <nav
+        class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-surface-container-lowest dark:bg-surface-container-highest shadow-[0_-4px_12px_rgba(0,106,106,0.04)] rounded-t-xl">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant transition-all duration-300 active:scale-90"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="home">home</span>
+            <span class="font-label-caps text-label-caps">首页</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant transition-all duration-300 active:scale-90"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+            <span class="font-label-caps text-label-caps">账单</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant transition-all duration-300 active:scale-90"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+            <span class="font-label-caps text-label-caps">预算</span>
+        </a>
+        <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 transition-all duration-300 active:scale-90"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="person">person</span>
+            <span class="font-label-caps text-label-caps">我的</span>
+        </a>
+    </nav>
+    <script>
+        // Simple Interaction logic for demo
+        const guestToggle = document.getElementById('guestToggle');
+        guestToggle.addEventListener('change', (e) => {
+            const isGuest = e.target.checked;
+            console.log(`Guest mode: ${isGuest}`);
+            // Logic to update UI states could go here
+        });
+
+        // Add subtle hover/active scale effect to all buttons
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mousedown', () => el.classList.add('scale-95'));
+            el.addEventListener('mouseup', () => el.classList.remove('scale-95'));
+            el.addEventListener('mouseleave', () => el.classList.remove('scale-95'));
+        });
+    </script>
+</body>
+
+</html>

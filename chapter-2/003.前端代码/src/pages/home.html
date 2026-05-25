@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html class="light" lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轻账本</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-20..200&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "income-teal": "#4EBABA",
+            "primary": "#006a6a",
+            "primary-container": "#4ebaba",
+            "on-primary-container": "#004747",
+            "expense-red": "#F26D5F",
+            "surface": "#f8fafb",
+            "surface-white": "#FFFFFF",
+            "surface-container-low": "#f2f4f5",
+            "surface-container-high": "#e6e8e9",
+            "surface-container-lowest": "#ffffff",
+            "surface-bright": "#f8fafb",
+            "text-primary": "#1A1C1E",
+            "text-secondary": "#6A7178",
+            "on-surface": "#191c1d",
+            "on-surface-variant": "#3d4949",
+            "outline": "#6d7979",
+            "outline-variant": "#bcc9c8",
+          },
+          fontFamily: {
+            sans: ["Manrope", "sans-serif"],
+          },
+        },
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+    }
+
+    .card-shadow {
+      box-shadow: 0 4px 12px rgba(0, 106, 106, 0.04);
+    }
+  </style>
+</head>
+
+<body class="bg-surface text-on-surface antialiased">
+  <!-- Top App Bar (Mobile Only) -->
+  <header
+    class="lg:hidden fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-surface-white/80 backdrop-blur-md border-b border-outline-variant/20">
+    <div class="text-xl font-bold text-primary">轻账本</div>
+    <div class="flex gap-4">
+      <span class="material-symbols-outlined text-primary cursor-pointer">calendar_today</span>
+      <span class="material-symbols-outlined text-primary cursor-pointer">account_circle</span>
+    </div>
+  </header>
+
+  <!-- Side Navigation Bar (Desktop Only) -->
+  <aside
+    class="hidden lg:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-lowest border-r border-outline-variant z-40 p-6">
+    <div class="mb-10">
+      <h1 class="text-2xl font-bold text-income-teal">轻账本</h1>
+    </div>
+    <nav class="flex-1 space-y-2">
+      <a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-medium transition-all" href="home.html">
+        <span class="material-symbols-outlined">home</span><span class="text-sm">首页</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="records.html">
+        <span class="material-symbols-outlined">analytics</span><span class="text-sm">账单</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="budget.html">
+        <span class="material-symbols-outlined">account_balance_wallet</span><span class="text-sm">预算</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="profile.html">
+        <span class="material-symbols-outlined">person</span><span class="text-sm">我的</span>
+      </a>
+    </nav>
+    <button class="mb-4 w-full bg-primary text-white rounded-xl py-3 px-4 flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-all" onclick="window.location.href='add-record.html'">
+      <span class="material-symbols-outlined">add</span><span class="text-sm font-medium">记一笔</span>
+    </button>
+    <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all mt-auto" href="settings.html">
+      <span class="material-symbols-outlined">settings</span><span class="text-sm">设置</span>
+    </a>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="lg:ml-64 min-h-screen pt-20 lg:pt-10 pb-24 lg:pb-10 px-4 lg:px-8 max-w-4xl mx-auto">
+    <!-- Welcome Header -->
+    <div class="mb-6 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+      <div>
+        <h2 class="text-2xl lg:text-3xl font-semibold text-text-primary" id="welcomeTitle">你好，用户</h2>
+        <p class="text-sm text-text-secondary mt-1" id="currentDate">2026年5月24日星期日</p>
+      </div>
+      <div class="hidden lg:flex items-center gap-2 text-primary bg-primary-container/20 px-4 py-2 rounded-full">
+        <span class="material-symbols-outlined text-lg">calendar_today</span>
+        <span class="text-xs font-bold uppercase tracking-wider">今日概览</span>
+      </div>
+    </div>
+
+    <!-- Bento Grid Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <!-- Today's Spending Card -->
+      <div
+        class="lg:col-span-2 p-6 bg-surface-white rounded-xl card-shadow border border-surface-container-low relative overflow-hidden group">
+        <div class="absolute -right-4 -top-4 opacity-5 group-hover:scale-110 transition-transform duration-700">
+          <span class="material-symbols-outlined text-[160px] text-primary">payments</span>
+        </div>
+        <div class="relative z-10">
+          <p class="text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-2">今日支出</p>
+          <div class="flex items-baseline gap-1">
+            <span class="text-2xl text-primary font-bold">¥</span>
+            <h3 class="text-5xl font-bold text-primary" id="todayExpense">0.00</h3>
+          </div>
+          <div class="mt-4 flex items-center gap-4">
+            <div class="flex items-center gap-1 text-expense-red">
+              <span class="material-symbols-outlined text-sm">trending_up</span>
+              <span class="text-sm" id="expenseTrend">较昨日 +0%</span>
+            </div>
+            <div class="h-4 w-[1px] bg-outline-variant"></div>
+            <div class="text-on-surface-variant text-sm">剩余预算 <span id="remainingBudget"
+                class="font-semibold text-income-teal">¥5,000</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monthly Summary Card -->
+      <div class="p-6 bg-primary rounded-xl text-white relative overflow-hidden group">
+        <div class="absolute -right-4 -bottom-4 opacity-10">
+          <span class="material-symbols-outlined text-[120px]">account_balance</span>
+        </div>
+        <div class="relative z-10">
+          <p class="text-xs font-bold uppercase tracking-wider text-white/70 mb-2">本月结余</p>
+          <div class="flex items-baseline gap-1">
+            <span class="text-xl font-bold">¥</span>
+            <h3 class="text-4xl font-bold" id="monthBalance">0.00</h3>
+          </div>
+          <div class="mt-4 flex items-center gap-4 text-sm text-white/80">
+            <div><span class="text-income-teal font-semibold" id="monthIncome">+0</span> 收入</div>
+            <div><span class="text-expense-red font-semibold" id="monthExpense">-0</span> 支出</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Add (Desktop) -->
+    <div
+      class="hidden lg:flex mt-4 p-6 bg-income-teal text-white rounded-xl cursor-pointer hover:opacity-95 transition-all group active:scale-[0.98]"
+      onclick="window.location.href='add-record.html'">
+      <div
+        class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mr-4 group-hover:rotate-90 transition-transform">
+        <span class="material-symbols-outlined text-3xl">add</span>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold">快速记账</h3>
+        <p class="text-sm text-white/80">点击添加一笔新记录</p>
+      </div>
+    </div>
+
+    <!-- Recent Records -->
+    <div class="mt-8">
+      <div class="flex items-center justify-between mb-4">
+        <h4 class="text-lg font-semibold text-text-primary">近期账单</h4>
+        <button class="text-primary text-xs font-bold uppercase tracking-wider hover:underline"
+          onclick="window.location.href='records.html'">查看全部</button>
+      </div>
+
+      <div class="space-y-3" id="transactionList">
+        <!-- Records will be populated by JS -->
+      </div>
+
+      <!-- Empty State -->
+      <div class="hidden flex-col items-center justify-center py-16 text-center" id="emptyState">
+        <div class="w-24 h-24 mb-6 rounded-full bg-surface-container-low flex items-center justify-center opacity-40">
+          <span class="material-symbols-outlined text-5xl">receipt_long</span>
+        </div>
+        <h3 class="text-lg font-semibold text-text-primary mb-2">暂无记录</h3>
+        <p class="text-sm text-text-secondary mb-8">开始记第一笔账吧，让每一分钱都有据可查。</p>
+        <button
+          class="bg-primary text-white px-8 py-3 rounded-full font-semibold shadow-md active:scale-95 transition-transform"
+          onclick="window.location.href='add-record.html'">
+          立即记账
+        </button>
+      </div>
+    </div>
+
+    <!-- Featured Card -->
+    <div class="mt-8 relative h-48 rounded-2xl overflow-hidden group">
+      <img alt="Financial Dashboard"
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+        src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=300&fit=crop">
+      <div class="absolute inset-0 bg-gradient-to-r from-primary/80 to-transparent flex flex-col justify-center px-8">
+        <h3 class="text-white text-xl font-bold">理财智慧</h3>
+        <p class="text-white/80 text-sm mt-1">查看本月财务分析报告 →</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation Bar (Mobile Only) -->
+  <nav
+    class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-surface-container-lowest shadow-[0_-4px_12px_rgba(0,106,106,0.04)] rounded-t-xl">
+    <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1"
+      href="home.html">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+      <span class="text-xs font-bold uppercase tracking-wider">首页</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="records.html">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+      <span class="text-xs">账单</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="budget.html">
+      <span class="material-symbols-outlined">account_balance_wallet</span>
+      <span class="text-xs">预算</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="profile.html">
+      <span class="material-symbols-outlined">person</span>
+      <span class="text-xs">我的</span>
+    </a>
+  </nav>
+
+  <!-- Floating Action Button (Mobile Only) -->
+  <button
+    class="lg:hidden fixed bottom-24 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-lg flex items-center justify-center z-40 active:scale-90 transition-transform"
+    onclick="window.location.href='add-record.html'">
+    <span class="material-symbols-outlined text-3xl">add</span>
+  </button>
+
+  <script src="../scripts/app.js"></script>
+  <script>
+    function updateDate() {
+      const now = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+      document.getElementById('currentDate').textContent = now.toLocaleDateString('zh-CN', options);
+    }
+
+    function updateUI() {
+      document.getElementById('welcomeTitle').textContent = `你好, ${AppState.user?.name || '用户'}`;
+
+      const totals = AppState.getMonthlyTotals();
+      const monthlyExpense = totals.expense;
+      const monthlyIncome = totals.income;
+      const balance = monthlyIncome - monthlyExpense;
+
+      document.getElementById('monthBalance').textContent = balance.toFixed(2);
+      document.getElementById('monthIncome').textContent = `+${monthlyIncome.toFixed(0)}`;
+      document.getElementById('monthExpense').textContent = `-${monthlyExpense.toFixed(0)}`;
+
+      const budget = AppState.budget.monthly || 5000;
+      const remaining = budget - monthlyExpense;
+      document.getElementById('remainingBudget').textContent = `¥${remaining.toFixed(0)}`;
+
+      // Today expense
+      const today = new Date().toDateString();
+      const todayRecords = AppState.records.filter(r => new Date(r.createdAt).toDateString() === today && r.type === 'expense');
+      const todayExpense = todayRecords.reduce((sum, r) => sum + r.amount, 0);
+      document.getElementById('todayExpense').textContent = todayExpense.toFixed(2);
+
+      // Render recent records
+      const list = document.getElementById('transactionList');
+      const empty = document.getElementById('emptyState');
+      const recentRecords = AppState.records.slice(-5).reverse();
+
+      if (recentRecords.length === 0) {
+        list.classList.add('hidden');
+        empty.classList.remove('hidden');
+        empty.classList.add('flex');
+      } else {
+        list.classList.remove('hidden');
+        empty.classList.add('hidden');
+        empty.classList.remove('flex');
+
+        list.innerHTML = recentRecords.map(record => {
+          const category = CATEGORIES[record.type]?.find(c => c.id === record.category);
+          const date = new Date(record.createdAt);
+          const isToday = date.toDateString() === new Date().toDateString();
+          const timeStr = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+
+          return `
+            <div class="flex items-center justify-between p-4 bg-surface-white rounded-xl card-shadow border border-surface-container-low hover:border-primary-container transition-colors group">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-surface-container-low flex items-center justify-center text-primary group-hover:bg-primary-container/20 transition-colors">
+                  <span class="material-symbols-outlined">${category?.icon || 'receipt'}</span>
+                </div>
+                <div>
+                  <p class="font-semibold text-text-primary">${category?.name || '其他'}</p>
+                  <p class="text-sm text-text-secondary">${isToday ? '今天' : '昨天'} ${timeStr}</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="font-semibold ${record.type === 'expense' ? 'text-expense-red' : 'text-income-teal'}">${record.type === 'expense' ? '-' : '+'}¥${record.amount.toFixed(2)}</p>
+                <p class="text-xs text-on-surface-variant">${record.type === 'expense' ? '支出' : '收入'}</p>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      if (confirm('确定要退出登录吗？')) {
+        AppState.logout();
+        window.location.href = '../../login.html';
+      }
+    });
+
+    updateDate();
+    updateUI();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>预算 - 轻账本</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "income-teal": "#4EBABA",
+                        "surface-container-low": "#f2f4f5",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#ff7768",
+                        "on-tertiary-fixed": "#351000",
+                        "secondary": "#a8372d",
+                        "on-background": "#191c1d",
+                        "surface-tint": "#006a6a",
+                        "inverse-primary": "#6ed7d7",
+                        "primary": "#006a6a",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#004f50",
+                        "on-primary-fixed": "#002020",
+                        "text-primary": "#1A1C1E",
+                        "surface-variant": "#e1e3e4",
+                        "on-surface-variant": "#3d4949",
+                        "inverse-on-surface": "#eff1f2",
+                        "on-tertiary-container": "#6b2c08",
+                        "on-primary-container": "#004747",
+                        "secondary-fixed": "#ffdad5",
+                        "primary-fixed": "#8bf3f3",
+                        "tertiary-fixed": "#ffdbcc",
+                        "surface-dim": "#d8dadb",
+                        "outline-variant": "#bcc9c8",
+                        "tertiary-container": "#ee9468",
+                        "surface-container": "#eceeef",
+                        "on-secondary": "#ffffff",
+                        "expense-red": "#F26D5F",
+                        "on-tertiary-fixed-variant": "#75340f",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#710d0b",
+                        "surface-container-highest": "#e1e3e4",
+                        "secondary-fixed-dim": "#ffb4aa",
+                        "on-secondary-fixed-variant": "#871f19",
+                        "tertiary": "#924b25",
+                        "outline": "#6d7979",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "surface-container-high": "#e6e8e9",
+                        "surface": "#f8fafb",
+                        "text-secondary": "#6A7178",
+                        "inverse-surface": "#2e3132",
+                        "background": "#f8fafb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#191c1d",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#6ed7d7",
+                        "primary-container": "#4ebaba",
+                        "surface-white": "#FFFFFF",
+                        "surface-bright": "#f8fafb",
+                        "on-secondary-fixed": "#410001",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "12px",
+                        "stack-sm": "8px",
+                        "margin-tablet": "24px",
+                        "base": "4px",
+                        "margin-mobile": "16px",
+                        "stack-md": "16px",
+                        "stack-lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["manrope"],
+                        "label-caps": ["manrope"],
+                        "headline-md": ["manrope"],
+                        "body-md": ["manrope"],
+                        "display-num": ["manrope"],
+                        "headline-lg": ["manrope"],
+                        "num-md": ["manrope"],
+                        "headline-lg-mobile": ["manrope"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "700" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-num": ["40px", { "lineHeight": "48px", "letterSpacing": "-1px", "fontWeight": "700" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "num-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-surface min-h-screen">
+    <!-- Top AppBar (Mobile/Desktop) -->
+    <header
+        class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-surface dark:bg-background shadow-sm">
+        <h1 class="text-headline-md font-headline-md text-primary dark:text-primary-fixed-dim">轻账本</h1>
+        <div class="flex items-center gap-stack-md">
+            <span
+                class="material-symbols-outlined text-primary dark:text-primary-fixed-dim cursor-pointer active:opacity-80">calendar_today</span>
+            <span
+                class="material-symbols-outlined text-primary dark:text-primary-fixed-dim cursor-pointer active:opacity-80">account_circle</span>
+        </div>
+    </header>
+    <!-- SideNavBar (Desktop Only) -->
+    <aside
+        class="hidden md:flex flex-col h-full p-stack-md border-r border-outline-variant h-screen w-64 fixed left-0 top-0 bg-surface-container-lowest dark:bg-surface-dim shadow-sm z-40 pt-20">
+        <div class="flex-1 flex flex-col gap-2">
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all"
+                href="#">
+                <span class="material-symbols-outlined">home</span>
+                <span class="font-body-md text-body-md">首页</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all"
+                href="#">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="font-body-md text-body-md">账单</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold transition-all"
+                href="#">
+                <span class="material-symbols-outlined">account_balance_wallet</span>
+                <span class="font-body-md text-body-md">预算</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all"
+                href="#">
+                <span class="material-symbols-outlined">person</span>
+                <span class="font-body-md text-body-md">我的</span>
+            </a>
+        </div>
+        <div class="mt-auto">
+            <button
+                class="w-full bg-primary text-on-primary py-3 rounded-xl font-bold mb-4 active:scale-95 transition-transform">
+                记一笔
+            </button>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all"
+                href="#">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-body-md text-body-md">设置</span>
+            </a>
+        </div>
+    </aside>
+    <!-- Main Content Canvas -->
+    <main class="pt-20 pb-24 md:pl-72 px-margin-mobile max-w-5xl mx-auto">
+        <!-- Budget Overview Section (Asymmetric Bento Grid Style) -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-stack-lg">
+            <!-- Main Progress Ring Card -->
+            <section
+                class="md:col-span-8 bg-surface-container-lowest rounded-3xl p-stack-lg shadow-[0_4px_12px_rgba(0,106,106,0.04)] flex flex-col items-center justify-center relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-stack-md">
+                    <span
+                        class="text-label-caps font-label-caps text-on-surface-variant bg-surface-container-high px-3 py-1 rounded-full">11月预算</span>
+                </div>
+                <!-- Circular Progress Ring -->
+                <div class="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center mb-6">
+                    <svg class="w-full h-full">
+                        <circle class="text-surface-container-high" cx="50%" cy="50%" fill="transparent" r="110"
+                            stroke="currentColor" stroke-width="12"></circle>
+                        <circle class="progress-ring__circle text-income-teal" cx="50%" cy="50%" fill="transparent"
+                            r="110" stroke="currentColor" stroke-dasharray="691.15" stroke-dashoffset="172.78"
+                            stroke-linecap="round" stroke-width="12"></circle>
+                    </svg>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                        <span class="text-label-caps font-label-caps text-text-secondary uppercase">剩余可用</span>
+                        <span class="text-display-num font-display-num text-primary">¥2,450</span>
+                        <div class="flex items-center gap-1 text-income-teal mt-1">
+                            <span class="material-symbols-outlined text-sm">trending_down</span>
+                            <span class="text-body-md font-body-md">已用 75%</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Warning Message (Conditional) -->
+                <div
+                    class="w-full bg-error-container/20 border border-error/10 rounded-xl p-stack-md flex items-center gap-3 animate-pulse">
+                    <span class="material-symbols-outlined text-error">warning</span>
+                    <p class="text-body-md font-body-md text-error">本月支出已接近预算上限，请合理分配剩余资金。</p>
+                </div>
+            </section>
+            <!-- Side Stats Cards -->
+            <div class="md:col-span-4 flex flex-col gap-stack-lg">
+                <!-- Daily Allowance Card -->
+                <div
+                    class="bg-primary text-on-primary rounded-3xl p-stack-lg shadow-lg flex flex-col justify-between h-full">
+                    <div>
+                        <span class="text-label-caps font-label-caps opacity-80">每日建议消费</span>
+                        <h2 class="text-headline-lg font-headline-lg mt-2">¥245.00</h2>
+                    </div>
+                    <div class="mt-8 flex items-center justify-between">
+                        <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined">schedule</span>
+                        </div>
+                        <span class="text-body-md font-body-md opacity-90 text-right">还有 10 天<br>结算当前周期</span>
+                    </div>
+                </div>
+                <!-- Quick Action/Setting Card -->
+                <div class="bg-surface-container-high rounded-3xl p-stack-lg shadow-sm">
+                    <h3 class="text-headline-md font-headline-md text-on-surface mb-4">预算设置</h3>
+                    <div class="space-y-stack-md">
+                        <div class="flex flex-col gap-2">
+                            <div class="flex justify-between items-center">
+                                <label class="text-body-md font-body-md text-on-surface-variant">总额设定</label>
+                                <span class="text-num-md font-num-md text-primary">¥10,000</span>
+                            </div>
+                            <input
+                                class="w-full h-2 bg-surface-variant rounded-lg appearance-none cursor-pointer accent-primary"
+                                max="50000" min="1000" step="500" type="range" value="10000">
+                        </div>
+                        <button
+                            class="w-full py-3 bg-surface-container-lowest text-primary border border-primary/20 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary/5 transition-colors">
+                            <span class="material-symbols-outlined text-sm">edit</span>
+                            调整明细
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Secondary Section: History & Tips -->
+        <div class="mt-stack-lg grid grid-cols-1 md:grid-cols-2 gap-stack-lg">
+            <!-- Budget History List -->
+            <section class="bg-surface-container-lowest rounded-3xl p-stack-lg shadow-sm">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-headline-md font-headline-md">预算走势</h3>
+                    <span class="material-symbols-outlined text-on-surface-variant cursor-pointer">more_horiz</span>
+                </div>
+                <div class="space-y-4">
+                    <!-- History Item -->
+                    <div
+                        class="flex items-center justify-between p-3 hover:bg-surface-container-low rounded-xl transition-colors">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-10 h-10 rounded-full bg-income-teal/10 text-income-teal flex items-center justify-center">
+                                <span class="material-symbols-outlined">trending_up</span>
+                            </div>
+                            <div>
+                                <p class="text-body-lg font-bold">10月 预算结余</p>
+                                <p class="text-body-md text-on-surface-variant">省下了 ¥1,200</p>
+                            </div>
+                        </div>
+                        <span class="text-num-md font-num-md text-income-teal">+12%</span>
+                    </div>
+                    <!-- History Item -->
+                    <div
+                        class="flex items-center justify-between p-3 hover:bg-surface-container-low rounded-xl transition-colors">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-10 h-10 rounded-full bg-expense-red/10 text-expense-red flex items-center justify-center">
+                                <span class="material-symbols-outlined">trending_down</span>
+                            </div>
+                            <div>
+                                <p class="text-body-lg font-bold">9月 预算超出</p>
+                                <p class="text-body-md text-on-surface-variant">超出 ¥350</p>
+                            </div>
+                        </div>
+                        <span class="text-num-md font-num-md text-expense-red">-4%</span>
+                    </div>
+                </div>
+            </section>
+            <!-- Saving Tips / Recommendation Card -->
+            <section class="relative rounded-3xl overflow-hidden min-h-[240px] group">
+                <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    data-alt="A minimalist and clean aesthetic photography of a person's hand writing in a sleek notebook with a cup of matcha tea on a light oak desk. The scene is bathed in soft, natural morning light, creating a calm and focused atmosphere. The background is a clean white wall with subtle shadows of a plant. The color palette consists of soft greens, whites, and natural wood tones, reflecting a peaceful financial planning session."
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZEwt3hwzsLtNzMb87C8q1B4CxWjSbWVgmiYtuiVeqwKjr9_88BcKxkP7W-VD1hxRWjaD4IyKuFXMmeqwEBCkolIrcgwraDQJU-tzFg9rQiFGHNstA0sSfsErsHOld3DrGQo2d4pp5lYw9Qkes-E-4QU-FwU_qjpgP2nXgrl8Y8EhMISrxOjRer0ThBjPXabl2DTGX8SA73IoK87R_fxuVnVWCp8V4jkmmaQJvxhKyYle6azKy75VNZpsKi9lbXZwRBTzS6jjnoeU">
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent flex flex-col justify-end p-stack-lg">
+                    <span class="text-label-caps font-label-caps text-primary-fixed mb-2">存钱锦囊</span>
+                    <h4 class="text-headline-lg font-headline-lg text-white mb-4">如何在本月节省 10%？</h4>
+                    <p class="text-body-md text-white/80 line-clamp-2 mb-4">试试“拿铁因子”法则，减少非必要的小额开支，你会惊讶于积少成多的力量。</p>
+                    <button
+                        class="bg-white/20 backdrop-blur-md text-white border border-white/30 px-6 py-2 rounded-full font-bold text-body-md self-start hover:bg-white/30 transition-colors">
+                        阅读指南
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+    <!-- BottomNavBar (Mobile Only) -->
+    <nav
+        class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-surface-container-lowest dark:bg-surface-container-highest shadow-[0_-4px_12px_rgba(0,106,106,0.04)] rounded-t-xl">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant transition-all duration-300 active:scale-90"
+            href="#">
+            <span class="material-symbols-outlined">home</span>
+            <span class="font-label-caps text-label-caps">首页</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant transition-all duration-300 active:scale-90"
+            href="#">
+            <span class="material-symbols-outlined">analytics</span>
+            <span class="font-label-caps text-label-caps">账单</span>
+        </a>
+        <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 transition-all duration-300 active:scale-90"
+            href="#">
+            <span class="material-symbols-outlined"
+                style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+            <span class="font-label-caps text-label-caps">预算</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant transition-all duration-300 active:scale-90"
+            href="#">
+            <span class="material-symbols-outlined">person</span>
+            <span class="font-label-caps text-label-caps">我的</span>
+        </a>
+    </nav>
+    <!-- FAB (Floating Action Button) - Centered for Budget context on Mobile -->
+    <button
+        class="md:hidden fixed right-6 bottom-24 w-14 h-14 bg-primary text-on-primary rounded-2xl shadow-xl flex items-center justify-center z-50 active:scale-90 transition-transform">
+        <span class="material-symbols-outlined text-3xl">add</span>
+    </button>
+    <script>
+        // Micro-interaction for the progress ring
+        const circle = document.querySelector('.progress-ring__circle');
+        const radius = circle.r.baseVal.value;
+        const circumference = radius * 2 * Math.PI;
+
+        circle.style.strokeDasharray = `${circumference} ${circumference}`;
+        circle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const offset = circumference - (percent / 100 * circumference);
+            circle.style.strokeDashoffset = offset;
+        }
+
+        // Initialize with 75%
+        setTimeout(() => {
+            setProgress(75);
+        }, 500);
+
+        // Slider interaction
+        const slider = document.querySelector('input[type="range"]');
+        const budgetValue = document.querySelector('.text-num-md.text-primary');
+
+        slider.addEventListener('input', (e) => {
+            budgetValue.textContent = `¥${Number(e.target.value).toLocaleString()}`;
+            // Optional: simulate dynamic progress change based on total budget change
+        });
+    </script>
+</body>
+
+</html>

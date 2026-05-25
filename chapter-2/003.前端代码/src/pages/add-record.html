@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>记一笔 - 轻账本</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-20..200&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#006a6a',
+            'on-primary': '#ffffff',
+            'primary-container': '#4ebaba',
+            'on-primary-container': '#004747',
+            'income-teal': '#4EBABA',
+            'expense-red': '#F26D5F',
+            'surface': '#f8fafb',
+            'surface-white': '#FFFFFF',
+            'surface-container-low': '#f2f4f5',
+            'surface-container-high': '#e6e8e9',
+            'surface-container-lowest': '#ffffff',
+            'text-primary': '#1A1C1E',
+            'text-secondary': '#6A7178',
+            'on-surface': '#191c1d',
+            'on-surface-variant': '#3d4949',
+            'outline': '#6d7979',
+            'outline-variant': '#bcc9c8',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Manrope', sans-serif; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .card-shadow { box-shadow: 0 4px 12px rgba(0, 106, 106, 0.04); }
+    .type-btn.active-expense { background: #F26D5F; color: white; }
+    .type-btn.active-income { background: #4EBABA; color: white; }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+  <!-- Desktop Sidebar -->
+  <aside class="hidden lg:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-lowest border-r border-outline-variant z-40 p-6">
+    <div class="mb-10">
+      <h1 class="text-income-teal text-2xl font-bold">轻账本</h1>
+    </div>
+    <nav class="flex-1 space-y-2">
+      <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="home.html">
+        <span class="material-symbols-outlined">home</span><span class="text-sm">首页</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="records.html">
+        <span class="material-symbols-outlined">analytics</span><span class="text-sm">账单</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="budget.html">
+        <span class="material-symbols-outlined">account_balance_wallet</span><span class="text-sm">预算</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="profile.html">
+        <span class="material-symbols-outlined">person</span><span class="text-sm">我的</span>
+      </a>
+    </nav>
+    <button class="mb-4 w-full bg-primary text-white rounded-xl py-3 px-4 flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-all" onclick="window.location.href='add-record.html'">
+      <span class="material-symbols-outlined">add</span><span class="text-sm font-medium">记一笔</span>
+    </button>
+    <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all mt-auto" href="settings.html">
+      <span class="material-symbols-outlined">settings</span><span class="text-sm">设置</span>
+    </a>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="lg:ml-64 min-h-screen flex items-center justify-center p-6 lg:p-8 bg-surface">
+    <div class="bg-surface-white rounded-2xl card-shadow overflow-hidden flex flex-col lg:flex-row" style="max-width: 42rem; width: 100%;">
+      <!-- Left: Input Form -->
+      <div class="w-full lg:w-7/12 p-6 lg:p-8 flex flex-col gap-5">
+        <div class="flex items-center justify-between">
+          <h2 class="text-primary text-xl font-bold">记一笔</h2>
+          <button class="lg:hidden text-on-surface-variant" onclick="window.history.back()">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+
+        <!-- Type Toggle -->
+        <div class="flex p-1 bg-surface-container-low rounded-xl">
+          <button class="type-btn flex-1 py-2.5 text-center rounded-lg font-medium text-sm active-expense" id="typeExpense">支出</button>
+          <button class="type-btn flex-1 py-2.5 text-center rounded-lg font-medium text-sm text-on-surface-variant" id="typeIncome">收入</button>
+        </div>
+
+        <!-- Amount -->
+        <div class="flex flex-col gap-2">
+          <label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant ml-1">金额</label>
+          <div class="flex items-end gap-2 pb-2 border-b-2 border-outline-variant focus-within:border-primary transition-colors">
+            <span class="text-[40px] font-bold text-primary opacity-50">¥</span>
+            <input class="w-full border-none bg-transparent text-[40px] font-bold text-primary focus:ring-0 p-0" type="number" id="amount" placeholder="0.00" step="0.01" min="0">
+          </div>
+        </div>
+
+        <!-- Date & Note -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="flex flex-col gap-2">
+            <label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant ml-1">日期</label>
+            <div class="flex items-center gap-2 p-3 bg-surface-container-low rounded-xl cursor-pointer hover:bg-surface-container-high transition-colors" id="datePicker">
+              <span class="material-symbols-outlined text-primary text-lg">calendar_today</span>
+              <span class="font-medium text-sm text-on-surface" id="selectedDate">今天</span>
+              <input type="date" id="dateInput" class="hidden">
+            </div>
+          </div>
+          <div class="flex flex-col gap-2">
+            <label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant ml-1">备注</label>
+            <div class="flex items-center gap-2 p-3 bg-surface-container-low rounded-xl">
+              <span class="material-symbols-outlined text-primary text-lg">edit_note</span>
+              <input class="w-full border-none bg-transparent text-sm focus:ring-0 p-0 text-on-surface" placeholder="记录点什么..." type="text" id="note">
+            </div>
+          </div>
+        </div>
+
+        <!-- Category -->
+        <div class="flex flex-col gap-4">
+          <label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant ml-1">选择类别</label>
+          <div class="grid grid-cols-4 gap-3 overflow-y-auto max-h-[220px] pr-2" id="categoryGrid"></div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-4 mt-2">
+          <button class="flex-1 py-3 px-6 rounded-xl border border-outline-variant text-on-surface-variant font-semibold hover:bg-surface-container-low transition-colors" onclick="window.history.back()">取消</button>
+          <button class="flex-[2] py-3 px-6 rounded-xl bg-primary text-white font-semibold hover:opacity-90 active:scale-[0.98] transition-all shadow-md" id="saveBtn">保存记录</button>
+        </div>
+      </div>
+
+      <!-- Right: Decorative (Desktop) -->
+      <div class="hidden lg:block w-5/12 bg-primary relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary to-surface-tint opacity-80 z-10"></div>
+        <img class="absolute inset-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=600&fit=crop" alt="">
+        <div class="relative z-20 p-8 h-full flex flex-col justify-end text-white">
+          <span class="material-symbols-outlined text-5xl opacity-80 mb-4">account_balance</span>
+          <h3 class="text-xl font-bold mb-2">掌握每一分</h3>
+          <p class="text-sm opacity-80">记录不仅是为了回顾，更是为了更有计划的明天。</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-surface-container-lowest shadow-[0_-4px_12px_rgba(0,106,106,0.04)] rounded-t-xl">
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="home.html"><span class="material-symbols-outlined">home</span><span class="text-xs">首页</span></a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="records.html"><span class="material-symbols-outlined">analytics</span><span class="text-xs">账单</span></a>
+    <div class="relative -top-6"><button class="bg-primary text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform" onclick="window.location.href='add-record.html'"><span class="material-symbols-outlined text-3xl">add</span></button></div>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="budget.html"><span class="material-symbols-outlined">account_balance_wallet</span><span class="text-xs">预算</span></a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="profile.html"><span class="material-symbols-outlined">person</span><span class="text-xs">我的</span></a>
+  </nav>
+
+  <script src="../scripts/app.js"></script>
+  <script>
+    let recordType = 'expense';
+    let selectedCategory = null;
+
+    function renderCategories() {
+      const categories = CATEGORIES[recordType];
+      categoryGrid.innerHTML = categories.map((cat, index) => `
+        <div class="category-chip ${index === 0 ? 'selected' : ''}" data-id="${cat.id}">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-colors category-chip-icon">
+            <span class="material-symbols-outlined">${cat.icon}</span>
+          </div>
+          <span class="text-xs font-bold text-on-surface-variant category-chip-label">${cat.name}</span>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.category-chip').forEach(item => {
+        item.addEventListener('click', () => selectCategory(item));
+      });
+
+      selectedCategory = categories[0]?.id;
+    }
+
+    function selectCategory(item) {
+      document.querySelectorAll('.category-chip').forEach(el => {
+        el.querySelector('.category-chip-icon').className = 'w-12 h-12 rounded-xl flex items-center justify-center bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-colors category-chip-icon';
+        el.querySelector('.category-chip-label').className = 'text-xs font-bold text-on-surface-variant category-chip-label';
+      });
+      item.querySelector('.category-chip-icon').className = 'w-12 h-12 rounded-xl flex items-center justify-center bg-primary-container text-on-primary-container category-chip-icon';
+      item.querySelector('.category-chip-label').className = 'text-xs font-bold text-primary category-chip-label';
+      selectedCategory = item.dataset.id;
+    }
+
+    document.getElementById('typeExpense').addEventListener('click', () => {
+      recordType = 'expense';
+      document.getElementById('typeExpense').classList.add('active-expense');
+      document.getElementById('typeIncome').classList.remove('active-income');
+      selectedCategory = null;
+      renderCategories();
+    });
+
+    document.getElementById('typeIncome').addEventListener('click', () => {
+      recordType = 'income';
+      document.getElementById('typeIncome').classList.add('active-income');
+      document.getElementById('typeExpense').classList.remove('active-expense');
+      selectedCategory = null;
+      renderCategories();
+    });
+
+    document.getElementById('datePicker').addEventListener('click', () => document.getElementById('dateInput').showPicker?.() || document.getElementById('dateInput').click());
+    document.getElementById('dateInput').addEventListener('change', () => {
+      const date = new Date(document.getElementById('dateInput').value);
+      document.getElementById('selectedDate').textContent = `${date.getMonth() + 1}月${date.getDate()}日`;
+    });
+
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      const amount = parseFloat(document.getElementById('amount').value);
+      const note = document.getElementById('note').value;
+      const dateVal = document.getElementById('dateInput').value || new Date().toISOString().split('T')[0];
+
+      if (!amount || amount <= 0) { showToast('请输入有效金额', 'error'); return; }
+      if (!selectedCategory) { showToast('请选择类别', 'error'); return; }
+
+      AppState.addRecord({ type: recordType, amount, category: selectedCategory, note, date: dateVal });
+      showToast('记录已保存', 'success');
+      setTimeout(() => window.location.href = 'home.html', 1000);
+    });
+
+    renderCategories();
+  </script>
+</body>
+</html>

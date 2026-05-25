@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>预算 - 轻账本</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-20..200&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#006a6a',
+            'on-primary': '#ffffff',
+            'primary-container': '#4ebaba',
+            'on-primary-container': '#004747',
+            'income-teal': '#4EBABA',
+            'expense-red': '#F26D5F',
+            'surface': '#f8fafb',
+            'surface-white': '#FFFFFF',
+            'surface-container-low': '#f2f4f5',
+            'surface-container-high': '#e6e8e9',
+            'surface-container-lowest': '#ffffff',
+            'text-primary': '#1A1C1E',
+            'text-secondary': '#6A7178',
+            'on-surface': '#191c1d',
+            'on-surface-variant': '#3d4949',
+            'outline': '#6d7979',
+            'outline-variant': '#bcc9c8',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Manrope', sans-serif; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .card-shadow { box-shadow: 0 4px 12px rgba(0, 106, 106, 0.04); }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+  <!-- Desktop Sidebar -->
+  <aside class="hidden lg:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-lowest border-r border-outline-variant z-40 p-6">
+    <div class="mb-10">
+      <h1 class="text-income-teal text-2xl font-bold">轻账本</h1>
+    </div>
+    <nav class="flex-1 space-y-2">
+      <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="home.html">
+        <span class="material-symbols-outlined">home</span><span class="text-sm">首页</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="records.html">
+        <span class="material-symbols-outlined">analytics</span><span class="text-sm">账单</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg transition-all" href="budget.html">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span><span class="text-sm font-medium">预算</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="profile.html">
+        <span class="material-symbols-outlined">person</span><span class="text-sm">我的</span>
+      </a>
+    </nav>
+    <button class="mb-4 w-full bg-primary text-white rounded-xl py-3 px-4 flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-all" onclick="window.location.href='add-record.html'">
+      <span class="material-symbols-outlined">add</span><span class="text-sm font-medium">记一笔</span>
+    </button>
+    <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all mt-auto" href="settings.html">
+      <span class="material-symbols-outlined">settings</span><span class="text-sm">设置</span>
+    </a>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="lg:ml-64 min-h-screen p-6 lg:p-10 pb-24 lg:pb-10">
+    <header class="mb-8">
+      <h2 class="text-text-primary text-2xl font-bold">预算</h2>
+      <p class="text-text-secondary text-sm mt-1">管理您的月度预算</p>
+    </header>
+
+    <!-- Monthly Budget Card -->
+    <section class="bg-surface-white rounded-2xl card-shadow border border-surface-container-low p-6 mb-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-text-primary font-semibold">本月预算</h3>
+        <button class="text-primary text-sm font-medium" id="editBudgetBtn">编辑</button>
+      </div>
+
+      <div class="mb-4">
+        <p class="text-text-secondary text-sm mb-2">总预算</p>
+        <div class="flex items-baseline gap-2">
+          <span class="text-3xl font-bold text-text-primary" id="totalBudgetDisplay">¥5,000</span>
+          <span class="text-text-secondary text-sm">/ 月</span>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <div class="flex justify-between text-sm mb-2">
+          <span class="text-text-secondary">已使用</span>
+          <span class="text-text-primary font-medium" id="budgetProgressText">¥0 / ¥5,000</span>
+        </div>
+        <div class="w-full h-3 bg-surface-container-low rounded-full overflow-hidden">
+          <div class="h-full rounded-full transition-all duration-500" id="budgetProgressBar" style="width: 0%; background: #006a6a"></div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 mt-6 pt-4 border-t border-outline-variant/30">
+        <div>
+          <p class="text-text-secondary text-xs mb-1">剩余可用</p>
+          <p class="text-lg font-bold text-income-teal" id="budgetRemaining">¥5,000</p>
+        </div>
+        <div>
+          <p class="text-text-secondary text-xs mb-1">预计月末</p>
+          <p class="text-lg font-bold" id="monthEndEstimate">¥5,000</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Category Budgets -->
+    <section class="bg-surface-white rounded-2xl card-shadow border border-surface-container-low p-6">
+      <h3 class="text-text-primary font-semibold mb-4">分类预算</h3>
+      <div id="categoryBudgets" class="space-y-4"></div>
+      <button class="w-full mt-4 py-3 border border-dashed border-outline-variant rounded-xl text-text-secondary text-sm hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2" id="addCategoryBudgetBtn">
+        <span class="material-symbols-outlined">add</span>
+        添加分类预算
+      </button>
+    </section>
+  </main>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-surface-container-lowest shadow-[0_-4px_12px_rgba(0,106,106,0.04)] rounded-t-xl">
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="home.html">
+      <span class="material-symbols-outlined">home</span><span class="text-xs">首页</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="records.html">
+      <span class="material-symbols-outlined">analytics</span><span class="text-xs">账单</span>
+    </a>
+    <div class="relative -top-6">
+      <button class="bg-primary text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform" onclick="window.location.href='add-record.html'">
+        <span class="material-symbols-outlined text-3xl">add</span>
+      </button>
+    </div>
+    <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1" href="budget.html">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span><span class="text-xs font-bold uppercase tracking-wider">预算</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant p-2" href="profile.html">
+      <span class="material-symbols-outlined">person</span><span class="text-xs">我的</span>
+    </a>
+  </nav>
+
+  <!-- Edit Budget Modal -->
+  <div id="editBudgetModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-surface-white rounded-2xl card-shadow w-full max-w-sm p-6">
+      <h3 class="text-text-primary text-lg font-bold mb-4">设置月度预算</h3>
+      <div class="mb-4">
+        <label class="text-text-secondary text-sm mb-2 block">预算金额 (¥)</label>
+        <input class="w-full h-12 px-4 bg-surface-container-low rounded-xl text-lg font-bold focus:outline-none focus:border-primary" type="number" id="budgetInput" value="5000" min="0">
+      </div>
+      <div class="flex gap-4">
+        <button class="flex-1 py-3 border border-outline-variant rounded-xl text-text-secondary font-medium hover:bg-surface-container-low transition-colors" id="cancelEditBtn">取消</button>
+        <button class="flex-1 py-3 bg-primary text-white rounded-xl font-medium hover:opacity-90 transition-colors" id="saveBudgetBtn">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../scripts/app.js"></script>
+  <script>
+    const expenseCategories = CATEGORIES.expense;
+    const budget = AppState.budget;
+
+    function updateUI() {
+      const totalBudget = budget.monthly || 5000;
+      const monthlyExpense = AppState.getMonthlyTotals().expense;
+      const remaining = totalBudget - monthlyExpense;
+      const percent = Math.min((monthlyExpense / totalBudget) * 100, 100);
+
+      document.getElementById('totalBudgetDisplay').textContent = `¥${totalBudget.toFixed(0)}`;
+      document.getElementById('budgetProgressText').textContent = `¥${monthlyExpense.toFixed(0)} / ¥${totalBudget.toFixed(0)}`;
+      document.getElementById('budgetProgressBar').style.width = `${percent}%`;
+      document.getElementById('budgetRemaining').textContent = `¥${remaining.toFixed(0)}`;
+      document.getElementById('monthEndEstimate').textContent = `¥${remaining.toFixed(0)}`;
+
+      const progressBar = document.getElementById('budgetProgressBar');
+      if (percent >= 90) progressBar.style.background = '#F26D5F';
+      else if (percent >= 70) progressBar.style.background = '#924b25';
+      else progressBar.style.background = '#006a6a';
+
+      const container = document.getElementById('categoryBudgets');
+      container.innerHTML = expenseCategories.map(cat => {
+        const catBudget = budget.categories[cat.id] || 0;
+        const catExpense = AppState.records
+          .filter(r => r.type === 'expense' && r.category === cat.id)
+          .reduce((sum, r) => sum + r.amount, 0);
+        const catPercent = catBudget > 0 ? Math.min((catExpense / catBudget) * 100, 100) : 0;
+
+        return `
+          <div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary">${cat.icon}</span>
+              </div>
+              <div>
+                <p class="text-text-primary font-medium text-sm">${cat.name}</p>
+                <p class="text-text-secondary text-xs">已花 ¥${catExpense.toFixed(0)}</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="text-text-primary font-medium text-sm">¥${catBudget > 0 ? catBudget.toFixed(0) : '未设置'}</p>
+              ${catBudget > 0 ? `<div class="w-16 h-1 bg-surface-container-high rounded-full mt-1 overflow-hidden"><div class="h-full bg-primary rounded-full" style="width: ${catPercent}%"></div></div>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    const modal = document.getElementById('editBudgetModal');
+    document.getElementById('editBudgetBtn').addEventListener('click', () => {
+      document.getElementById('budgetInput').value = budget.monthly || 5000;
+      modal.classList.remove('hidden');
+    });
+
+    document.getElementById('cancelEditBtn').addEventListener('click', () => modal.classList.add('hidden'));
+    document.getElementById('saveBudgetBtn').addEventListener('click', () => {
+      const newBudget = parseFloat(document.getElementById('budgetInput').value) || 5000;
+      AppState.budget.monthly = newBudget;
+      AppState.save();
+      updateUI();
+      modal.classList.add('hidden');
+      showToast('预算已更新', 'success');
+    });
+
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
+    updateUI();
+  </script>
+</body>
+</html>
