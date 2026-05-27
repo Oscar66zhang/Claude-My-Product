@@ -182,7 +182,8 @@
     </section>
   </main>
 
-  <script src="../scripts/app.js"></script>
+  <script src="../../src/scripts/api.js"></script>
+  <script src="../../src/scripts/app.js"></script>
   <script>
     const toggleBtn = document.getElementById('togglePassword');
     const passwordInput = document.getElementById('password');
@@ -193,22 +194,54 @@
       toggleBtn.querySelector('span').textContent = isPassword ? 'visibility_off' : 'visibility';
     });
 
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
       e.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirm_password').value;
 
-      if (password.length < 6) { showToast('密码长度至少为6位', 'error'); return; }
-      if (password !== confirmPassword) { showToast('两次输入的密码不一致', 'error'); return; }
+      if (!username || !password || !confirmPassword) {
+        showToast('请填写所有字段', 'error');
+        return;
+      }
+
+      if (password.length < 6) {
+        showToast('密码长度至少为6位', 'error');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showToast('两次输入的密码不一致', 'error');
+        return;
+      }
+
+      if (!document.getElementById('terms').checked) {
+        showToast('请阅读并同意用户协议', 'error');
+        return;
+      }
 
       const btn = this.querySelector('button[type="submit"]');
       btn.disabled = true;
       btn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span><span>注册中...</span>';
 
-      setTimeout(() => {
-        showToast('注册成功！即将跳转到登录页...', 'success');
-        setTimeout(() => window.location.href = '../../login.html', 1500);
-      }, 1500);
+      try {
+        // 使用 username 作为昵称
+        const result = await AuthAPI.register(username, password, username);
+        if (result.success) {
+          showToast('注册成功！即将跳转到首页...', 'success');
+          setTimeout(() => window.location.href = 'home.html', 1500);
+        } else {
+          showToast(result.message || '注册失败', 'error');
+          btn.disabled = false;
+          btn.textContent = '立即注册';
+        }
+      } catch (error) {
+        showToast(error.message, 'error');
+        btn.disabled = false;
+        btn.textContent = '立即注册';
+      }
     });
   </script>
 </body>

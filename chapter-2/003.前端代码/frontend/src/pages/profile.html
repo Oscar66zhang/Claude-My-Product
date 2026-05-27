@@ -79,8 +79,9 @@
     <!-- User Info Card -->
     <section class="bg-surface-white rounded-2xl card-shadow border border-surface-container-low p-6 mb-6">
       <div class="flex items-center gap-4">
-        <div class="w-20 h-20 rounded-full bg-primary-container flex items-center justify-center">
-          <span class="material-symbols-outlined text-4xl text-on-primary-container">person</span>
+        <div class="w-20 h-20 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+          <img id="userAvatar" src="" alt="用户头像" class="w-full h-full object-cover hidden">
+          <span id="userAvatarPlaceholder" class="material-symbols-outlined text-4xl text-on-primary-container">person</span>
         </div>
         <div class="flex-1">
           <h3 class="text-text-primary text-xl font-bold" id="userName">用户</h3>
@@ -164,14 +165,28 @@
     </a>
   </nav>
 
+  <script src="../scripts/api.js"></script>
   <script src="../scripts/app.js"></script>
   <script>
     function updateUI() {
+      const user = AuthAPI.getUserInfo();
       const monthlyRecords = AppState.getMonthlyRecords();
       const totals = AppState.getMonthlyTotals();
 
-      document.getElementById('userName').textContent = AppState.user?.name || '用户';
-      document.getElementById('userEmail').textContent = AppState.user?.email || 'user@example.com';
+      document.getElementById('userName').textContent = user?.nickname || user?.username || '用户';
+      document.getElementById('userEmail').textContent = user?.username || 'user@example.com';
+
+      // Handle avatar
+      const avatarImg = document.getElementById('userAvatar');
+      const avatarPlaceholder = document.getElementById('userAvatarPlaceholder');
+      if (user?.avatar_url) {
+        avatarImg.src = user.avatar_url;
+        avatarImg.classList.remove('hidden');
+        avatarPlaceholder.classList.add('hidden');
+      } else {
+        avatarImg.classList.add('hidden');
+        avatarPlaceholder.classList.remove('hidden');
+      }
       document.getElementById('totalRecords').textContent = monthlyRecords.length;
       document.getElementById('totalIncome').textContent = `¥${totals.income.toFixed(0)}`;
       document.getElementById('totalExpense').textContent = `¥${totals.expense.toFixed(0)}`;
@@ -228,8 +243,14 @@
       showToast('数据已导出', 'success');
     }
 
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      if (confirm('确定要退出登录吗？')) { AppState.logout(); window.location.href = '../../login.html'; }
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      if (confirm('确定要退出登录吗？')) {
+        try {
+          await AuthAPI.logout();
+        } finally {
+          window.location.href = '../../login.html';
+        }
+      }
     });
 
     updateUI();

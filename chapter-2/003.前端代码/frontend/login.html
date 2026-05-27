@@ -256,6 +256,7 @@
     </section>
   </main>
 
+  <script src="src/scripts/api.js"></script>
   <script src="src/scripts/app.js"></script>
   <script>
     // Input focus effects
@@ -292,7 +293,7 @@
     });
 
     // Form submission
-    document.getElementById('loginForm').addEventListener('submit', function (e) {
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
       e.preventDefault();
 
       const email = document.getElementById('email').value;
@@ -307,11 +308,21 @@
       btn.disabled = true;
       btn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span><span>登录中...</span>';
 
-      setTimeout(() => {
-        AppState.login(email, password);
-        showToast('登录成功', 'success');
-        window.location.href = 'src/pages/home.html';
-      }, 1500);
+      try {
+        const result = await AuthAPI.login(email, password);
+        if (result.success) {
+          showToast('登录成功', 'success');
+          window.location.href = 'src/pages/home.html';
+        } else {
+          showToast(result.message || '登录失败', 'error');
+          btn.disabled = false;
+          btn.innerHTML = '<span>登录</span><span class="material-symbols-outlined text-lg">login</span>';
+        }
+      } catch (error) {
+        showToast(error.message, 'error');
+        btn.disabled = false;
+        btn.innerHTML = '<span>登录</span><span class="material-symbols-outlined text-lg">login</span>';
+      }
     });
   </script>
 </body>
