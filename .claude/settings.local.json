@@ -3,7 +3,9 @@
     "allow": [
       "WebFetch(domain:minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(git reset *)",
+      "Bash(git push *)"
     ]
   },
   "additionalDirectories": [
